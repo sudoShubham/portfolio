@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Messy Playground — Shubham Pagare</title>
+<meta name="description" content="AI systems often fail in production not because the model is weak — but because the architecture assumed a clean world that never existed.">
+<meta name="author" content="Shubham Pagare">
+<meta name="theme-color" content="#f6f7f4">
+<link rel="canonical" href="https://shubhampagare.dev/blog/messy-playground.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The messy playground: why AI systems pass the demo and die in production">
+<meta property="og:description" content="The hard part isn't implementation. It's modeling the messy environment your system actually has to survive.">
+<meta property="og:url" content="https://shubhampagare.dev/blog/messy-playground.html">
+<meta property="og:image" content="https://shubhampagare.dev/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The messy playground: why AI systems pass the demo and die in production">
+<meta name="twitter:description" content="The hard part isn't implementation. It's modeling the messy environment your system actually has to survive.">
+<meta name="twitter:image" content="https://shubhampagare.dev/og-image.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080b11'/%3E%3Ccircle cx='32' cy='32' r='6' fill='none' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='32' y1='10' x2='32' y2='26' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='32' y1='38' x2='32' y2='54' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='10' y1='32' x2='26' y2='32' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='38' y1='32' x2='54' y2='32' stroke='%235eead4' stroke-width='3'/%3E%3Ccircle cx='32' cy='10' r='4' fill='%235eead4'/%3E%3Ccircle cx='54' cy='32' r='4' fill='%23fbbf24'/%3E%3Ccircle cx='32' cy='54' r='4' fill='%235eead4'/%3E%3Ccircle cx='10' cy='32' r='4' fill='%235eead4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  :root{
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  html[data-theme="dark"]{
+    --bg:#080b11;--bg-2:#0d1119;--ink:#e8edf4;--ink-dim:#9aa6b8;--ink-faint:#6b7789;
+    --line:#1d2533;--signal:#5eead4;--signal-dim:#2dd4bf;--warn:#fbbf24;
+    --glass:rgba(255,255,255,0.035);--glass-brd:rgba(255,255,255,0.08);--glass-hi:rgba(94,234,212,0.30);
+    --shadow:0 20px 50px -20px rgba(0,0,0,.7);
+  }
+  html[data-theme="light"]{
+    --bg:#f6f7f4;--bg-2:#eef0eb;--ink:#11161d;--ink-dim:#3d4654;--ink-faint:#6b7583;
+    --line:#dfe2db;--signal:#0d9488;--signal-dim:#0f766e;--warn:#b45309;
+    --glass:rgba(255,255,255,0.55);--glass-brd:rgba(17,22,29,0.07);--glass-hi:rgba(13,148,136,0.32);
+    --shadow:0 18px 44px -22px rgba(31,41,55,.30);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.7;
+    -webkit-font-smoothing:antialiased;transition:background .4s ease,color .4s ease}
+  ::selection{background:var(--signal);color:var(--bg)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:720px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+  .ico{width:1em;height:1em;stroke-width:2}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(14px);
+    background:color-mix(in srgb,var(--bg) 70%,transparent);border-bottom:1px solid transparent;transition:border-color .3s}
+  nav.scrolled{border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:720px;margin:0 auto;padding:15px 28px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-family:var(--mono);font-size:13px;letter-spacing:.04em;display:flex;align-items:center;gap:10px}
+  .brand .dot{width:7px;height:7px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal)}
+  .nav-right{display:flex;align-items:center;gap:18px}
+  .back{font-family:var(--mono);font-size:12.5px;color:var(--ink-dim);display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+  .back:hover{color:var(--signal)}
+  .back .ico{width:14px;height:14px}
+  .theme-btn{display:grid;place-items:center;width:36px;height:36px;border-radius:9px;border:1px solid var(--line);
+    background:var(--glass);color:var(--ink-dim);cursor:pointer;transition:all .25s}
+  .theme-btn:hover{color:var(--signal);border-color:var(--glass-hi);transform:rotate(-12deg)}
+  .theme-btn .ico{width:17px;height:17px}
+
+  .article{padding:120px 0 80px}
+  .crumb{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:8px}
+  .crumb a{color:var(--signal);transition:opacity .2s}
+  .crumb a:hover{opacity:.7}
+  h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);line-height:1.15;letter-spacing:-.025em;margin-bottom:18px}
+  .lede{font-size:18px;color:var(--ink-dim);margin-bottom:22px;line-height:1.65}
+  .meta{font-family:var(--mono);font-size:12.5px;color:var(--ink-faint);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:42px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+  .meta .sep{width:3px;height:3px;border-radius:50%;background:var(--ink-faint)}
+
+  .prose h2{font-family:var(--display);font-size:clamp(22px,3vw,28px);font-weight:600;letter-spacing:-.02em;margin:48px 0 14px}
+  .prose h3{font-family:var(--display);font-size:19px;font-weight:600;margin:32px 0 10px}
+  .prose p{color:var(--ink-dim);font-size:16.5px;margin-bottom:16px}
+  .prose p b,.prose li b{color:var(--ink);font-weight:600}
+  .prose ul,.prose ol{margin:0 0 18px;padding-left:22px;color:var(--ink-dim);font-size:16px}
+  .prose li{margin-bottom:8px}
+  .prose a{color:var(--signal-dim);text-decoration:underline;text-underline-offset:3px}
+  .prose a:hover{color:var(--signal)}
+  .prose hr{border:none;border-top:1px solid var(--line);margin:40px 0}
+
+  .callout{background:var(--glass);border:1px solid var(--glass-brd);border-radius:14px;padding:20px 22px;margin:28px 0;position:relative;overflow:hidden}
+  .callout::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+    background:linear-gradient(135deg,var(--glass-hi),transparent 40%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.6}
+  .callout p{margin:0;position:relative;z-index:2;font-size:15.5px}
+  .callout .label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--signal);margin-bottom:8px;position:relative;z-index:2}
+
+  table{width:100%;border-collapse:collapse;margin:22px 0 28px;font-size:14px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--signal);font-weight:500}
+  td{color:var(--ink-dim)}
+  td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+
+  pre{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px 20px;overflow-x:auto;margin:18px 0 24px;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink)}
+  code{font-family:var(--mono);font-size:.92em}
+  p code,li code{background:var(--bg-2);border:1px solid var(--line);padding:1px 6px;border-radius:5px;font-size:13px}
+
+  .layers{display:grid;gap:10px;margin:20px 0 28px}
+  .layer{display:grid;grid-template-columns:100px 1fr;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--glass)}
+  .layer .k{font-family:var(--mono);font-size:12px;color:var(--signal);font-weight:600;padding-top:2px}
+  .layer .v{font-size:14.5px;color:var(--ink-dim)}
+  .layer .v b{color:var(--ink)}
+  @media(max-width:520px){.layer{grid-template-columns:1fr}}
+
+  .table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:22px 0 28px;border:1px solid var(--line);border-radius:12px}
+  .table-wrap table{margin:0;min-width:480px}
+
+  .footer-cta{margin-top:56px;padding-top:32px;border-top:1px solid var(--line);text-align:center}
+  .footer-cta p{color:var(--ink-dim);margin-bottom:18px;font-size:15.5px}
+  .btn{font-family:var(--mono);font-size:13px;padding:12px 18px;border-radius:9px;transition:all .22s;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line)}
+  .btn .ico{width:15px;height:15px}
+  .btn.ghost{color:var(--ink-dim);background:var(--glass)}
+  .btn.ghost:hover{color:var(--ink);border-color:var(--signal);transform:translateY(-2px)}
+
+  footer{border-top:1px solid var(--line);padding:28px 0;margin-top:40px}
+  .foot-inner{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;color:var(--ink-faint);flex-wrap:wrap;gap:10px}
+
+  @media(max-width:640px){
+    .wrap{padding:0 18px}
+    .nav-inner{padding:12px 18px}
+    .article{padding:100px 0 56px}
+    h1{font-size:clamp(24px,7.2vw,34px);line-height:1.2}
+    .lede{font-size:16px}
+    .meta{gap:8px;margin-bottom:32px;padding-bottom:22px;font-size:12px}
+    .prose h2{margin:36px 0 12px;font-size:clamp(20px,5.5vw,24px)}
+    .prose h3{font-size:17px;margin:26px 0 8px}
+    .prose p,.prose li{font-size:15.5px}
+    .callout{padding:16px 16px;border-radius:12px;margin:22px 0}
+    .callout p{font-size:14.5px}
+    .layer{padding:12px 14px;gap:8px}
+    .layer .v{font-size:14px}
+    td:first-child{white-space:normal}
+    .table-wrap{margin:18px 0 24px}
+    .table-wrap table{font-size:13px;min-width:420px}
+    .table-wrap th,.table-wrap td{padding:10px 10px}
+    .btn{min-height:44px;justify-content:center}
+    .foot-inner{justify-content:center;text-align:center}
+  }
+  @media(max-width:400px){
+    .wrap{padding:0 14px}
+    .nav-inner{padding:12px 14px}
+    .crumb{font-size:11px;flex-wrap:wrap}
+  }
+  @media(hover:none){
+    .btn.ghost:hover{transform:none}
+    .theme-btn:hover{transform:none}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand"><span class="dot"></span>shubham.pagare</a>
+    <div class="nav-right">
+      <a class="back" href="../index.html#writing"><i data-lucide="arrow-left" class="ico"></i> Writing</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i data-lucide="sun" class="ico" id="themeIcon"></i></button>
+    </div>
+  </div>
+</nav>
+
+<article class="article wrap">
+  <div class="crumb"><a href="../index.html">Home</a> / <a href="../index.html#writing">Writing</a> / Messy Playground</div>
+  <h1>The messy playground: why AI systems pass the demo and die in production</h1>
+  <p class="lede">Most AI products don't fail because the model is weak or the pipeline is buggy. They fail because the architecture assumed a clean world — complete docs, linked alerts, tidy ownership — that never existed outside the slide deck.</p>
+  <div class="meta">
+    <span>Shubham Pagare</span>
+    <span class="sep"></span>
+    <span>Aug 8, 2026</span>
+    <span class="sep"></span>
+    <span>7 min read</span>
+    <span class="sep"></span>
+    <span>AI Systems · Architecture</span>
+  </div>
+
+  <div class="prose">
+    <p>You've seen the pattern. A team ships an impressive AI assistant. The demo is sharp. Stakeholders nod. Then it hits the real org — and confidence collapses into noise.</p>
+    <p>People blame the model. Or the prompt. Or “we need more fine-tuning.” Sometimes those things matter. Often they don't.</p>
+    <p>The deeper miss is simpler: <b>the system was designed for an idealistic playground</b>. The architecture treated clean data, complete links, and current documentation as given. In production, those are aspirations — not inputs.</p>
+
+    <div class="callout">
+      <div class="label">The real product</div>
+      <p>You're not building “answer questions from knowledge.” You're building “answer questions when half the knowledge is missing, stale, or contradictory — and say so.” Those are different systems.</p>
+    </div>
+
+    <h2>What idealistic design quietly assumes</h2>
+    <p>Ideal architectures lean on a fantasy ontology:</p>
+    <ul>
+      <li>Every service has a current owner</li>
+      <li>Every alert maps to a runbook</li>
+      <li>Every wiki page is accurate and findable</li>
+      <li>Every PR states intent clearly</li>
+      <li>History is labeled with ground truth</li>
+    </ul>
+    <p>Then the system reasons over that graph as if it were reliable infrastructure. When the graph is fiction, the model isn't “hallucinating” in isolation — it's completing a story on top of missing foundations.</p>
+
+    <h2>Three places this shows up</h2>
+
+    <h3>1. Incident / on-call assistants</h3>
+    <p>The demo assumes a clean service map, correlated traces, and runbooks tied to alerts. The assistant confidently names root cause and points to the fix.</p>
+    <p>The real playground: ownership is stale, half the alerts have no runbook, traces are blind for a critical hop, and the last three incident writeups say “restarted pod, recovered.” Tribal knowledge lives in Slack. The assistant doesn't just get less accurate — it becomes <b>confidently useless</b>.</p>
+
+    <h3>2. Enterprise knowledge bots (RAG over Confluence / SharePoint)</h3>
+    <p>The pitch: “ask anything about how we work.” The assumption: the corpus is complete, current, and authoritative.</p>
+    <p>The real playground: three conflicting pages for the same process, last updated in 2022, with the real procedure living in a side channel nobody indexed. Retrieval finds text. It does not find truth. Users learn to distrust the bot after two wrong answers that sounded right.</p>
+
+    <h3>3. AI code reviewers</h3>
+    <p>Ideal design assumes PRs come with clear intent, linked tickets, and test plans. The reviewer can reason about blast radius and style.</p>
+    <p>The real playground: “fix stuff,” no ticket, partial tests, and a change that touches a package nobody owns on paper. A reviewer trained on tidy open-source norms will nitpick formatting while missing the actual risk — because the signals it needs were never in the PR.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Assumption</th><th>Demo world</th><th>Lived world</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Ownership</td><td>Clear, current</td><td>Shared, stale, tribal</td></tr>
+        <tr><td>Docs / runbooks</td><td>Linked and complete</td><td>Orphaned or contradictory</td></tr>
+        <tr><td>Observability</td><td>Full correlation</td><td>Blind spots by default</td></tr>
+        <tr><td>History</td><td>Labeled ground truth</td><td>Vague writeups, Slack lore</td></tr>
+        <tr><td>Failure mode</td><td>“Edge case”</td><td>The normal case</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Why demos keep lying to us</h2>
+    <p>Teams optimize for the happy path:</p>
+    <ol>
+      <li>Pick a clean sample (well-linked tickets, tidy wiki, instrumented service)</li>
+      <li>Build retrieval and reasoning on that graph</li>
+      <li>Show impressive accuracy</li>
+      <li>Ship into the real backlog / on-call / knowledge base</li>
+      <li>Watch coverage collapse — because the graph was the dependency, and the graph was fiction</li>
+    </ol>
+    <p>This is not an ML problem first. It's a <b>systems + environment modeling</b> problem. Implementation can be excellent and the product still fails, because the product was solving a different world.</p>
+
+    <div class="callout">
+      <div class="label">Architect's question</div>
+      <p>Before you design the agent, ask: <b>what percentage of critical inputs are actually present, current, and trustworthy?</b> If the honest answer is “maybe 20%,” your architecture must start from sparse evidence — not from the ontology you wish you had.</p>
+    </div>
+
+    <h2>Design for the playground you have</h2>
+    <p>Durable AI systems treat mess as a first-class constraint:</p>
+
+    <div class="layers">
+      <div class="layer"><div class="k">Inventory</div><div class="v"><b>Measure reality, not aspiration.</b> Link completeness, doc freshness, ownership coverage, blind-spot rate. Architecture follows the numbers.</div></div>
+      <div class="layer"><div class="k">Unknown</div><div class="v"><b>Missing data is an input.</b> Explicit states: observed, inferred, unknown. Never pretend unknown is known.</div></div>
+      <div class="layer"><div class="k">Signals</div><div class="v"><b>Prefer recoverable evidence.</b> Diffs, co-change history, live telemetry, ownership heuristics — things that exist when the wiki doesn't.</div></div>
+      <div class="layer"><div class="k">Certainty</div><div class="v"><b>Separate suggestion from confidence.</b> “High confidence because X/Y” vs “low confidence — missing links; verify these three places.”</div></div>
+      <div class="layer"><div class="k">Degrade</div><div class="v"><b>Design the fallback path.</b> Ideal path and sparse path are both products. “Phase 2” is how demos become production failures.</div></div>
+      <div class="layer"><div class="k">Eval</div><div class="v"><b>Test on dirty slices.</b> If your eval set only contains clean, linked, well-written cases, you're validating a fantasy.</div></div>
+    </div>
+
+    <h2>The principle</h2>
+    <p>Don't build for the catalogued world. Build for the lived one.</p>
+    <p>The skill that separates demo architecture from production architecture isn't prompt craft. It's <b>understanding the playground before designing the player</b> — what evidence is actually there, what is tribal, what is stale, and where the system must refuse to sound sure.</p>
+
+    <hr>
+    <p>That's the lens I keep coming back to when AI systems look perfect on paper and then fail in the wild. If you're hitting the same wall, I'd like to hear which assumption broke first for you.</p>
+  </div>
+
+  <div class="footer-cta">
+    <p>More writing and work on the main site.</p>
+    <a class="btn ghost" href="../index.html#writing"><i data-lucide="arrow-left" class="ico"></i> Back to writing</a>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <span>© 2026 Shubham Pagare</span>
+      <span>Pune, India</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+  const root=document.documentElement;
+  const themeBtn=document.getElementById('themeBtn');
+  function setTheme(t){
+    root.setAttribute('data-theme',t);
+    document.getElementById('themeIcon').setAttribute('data-lucide',t==='dark'?'moon':'sun');
+    lucide.createIcons();
+  }
+  themeBtn.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+  addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>20));
+</script>
+</body>
+</html>
