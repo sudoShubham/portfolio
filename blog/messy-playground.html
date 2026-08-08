@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Messy Playground — Shubham Pagare</title>
+<title>Why AI Demos Die in Production — Shubham Pagare</title>
 <meta name="description" content="AI systems often fail in production not because the model is weak — but because the architecture assumed a clean world that never existed.">
 <meta name="author" content="Shubham Pagare">
 <meta name="theme-color" content="#f6f7f4">
 <link rel="canonical" href="https://shubhampagare.dev/blog/messy-playground.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="The messy playground: why AI systems pass the demo and die in production">
+<meta property="og:title" content="Why AI systems pass the demo and die in production">
 <meta property="og:description" content="The hard part isn't implementation. It's modeling the messy environment your system actually has to survive.">
 <meta property="og:url" content="https://shubhampagare.dev/blog/messy-playground.html">
 <meta property="og:image" content="https://shubhampagare.dev/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The messy playground: why AI systems pass the demo and die in production">
+<meta name="twitter:title" content="Why AI systems pass the demo and die in production">
 <meta name="twitter:description" content="The hard part isn't implementation. It's modeling the messy environment your system actually has to survive.">
 <meta name="twitter:image" content="https://shubhampagare.dev/og-image.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080b11'/%3E%3Ccircle cx='32' cy='32' r='6' fill='none' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='32' y1='10' x2='32' y2='26' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='32' y1='38' x2='32' y2='54' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='10' y1='32' x2='26' y2='32' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='38' y1='32' x2='54' y2='32' stroke='%235eead4' stroke-width='3'/%3E%3Ccircle cx='32' cy='10' r='4' fill='%235eead4'/%3E%3Ccircle cx='54' cy='32' r='4' fill='%23fbbf24'/%3E%3Ccircle cx='32' cy='54' r='4' fill='%235eead4'/%3E%3Ccircle cx='10' cy='32' r='4' fill='%235eead4'/%3E%3C/svg%3E">
@@ -286,9 +286,9 @@
 </nav>
 
 <article class="article wrap">
-  <div class="crumb"><a href="../index.html">Home</a> / <a href="../index.html#writing">Writing</a> / Messy Playground</div>
-  <h1>The messy playground: why AI systems pass the demo and die in production</h1>
-  <p class="lede">Most AI products don't fail because the model is weak or the pipeline is buggy. They fail because the architecture assumed a clean world — complete docs, linked alerts, tidy ownership — that never existed outside the slide deck.</p>
+  <div class="crumb"><a href="../index.html">Home</a> / <a href="../index.html#writing">Writing</a> / Demo vs Production</div>
+  <h1>Why AI systems pass the demo and die in production</h1>
+  <p class="lede">Most AI products don't fail because the model is weak or the pipeline is buggy. They fail because the architecture assumed a clean world — complete docs, linked alerts, tidy ownership — that never existed outside the slide deck. Call it the messy playground problem.</p>
   <div class="meta">
     <span>Shubham Pagare</span>
     <span class="sep"></span>
@@ -351,17 +351,18 @@
     </ul>
     <p>Then the system reasons over that graph as if it were reliable infrastructure. When the graph is fiction, the model isn't “hallucinating” in isolation — it's completing a story on top of missing foundations.</p>
 
-    <h2>Three places this shows up</h2>
+    <h2>Where this shows up</h2>
+    <p>A few familiar failure modes — not an exhaustive list, just patterns that keep repeating.</p>
 
-    <h3>1. Incident / on-call assistants</h3>
+    <h3>Incident / on-call assistants</h3>
     <p>The demo assumes a clean service map, correlated traces, and runbooks tied to alerts. The assistant confidently names root cause and points to the fix.</p>
     <p>The real playground: ownership is stale, half the alerts have no runbook, traces are blind for a critical hop, and the last three incident writeups say “restarted pod, recovered.” Tribal knowledge lives in Slack. The assistant doesn't just get less accurate — it becomes <b>confidently useless</b>.</p>
 
-    <h3>2. Enterprise knowledge bots (RAG over Confluence / SharePoint)</h3>
+    <h3>Enterprise knowledge bots (RAG over Confluence / SharePoint)</h3>
     <p>The pitch: “ask anything about how we work.” The assumption: the corpus is complete, current, and authoritative.</p>
     <p>The real playground: three conflicting pages for the same process, last updated in 2022, with the real procedure living in a side channel nobody indexed. Retrieval finds text. It does not find truth. Users learn to distrust the bot after two wrong answers that sounded right.</p>
 
-    <h3>3. AI code reviewers</h3>
+    <h3>AI code reviewers</h3>
     <p>Ideal design assumes PRs come with clear intent, linked tickets, and test plans. The reviewer can reason about blast radius and style.</p>
     <p>The real playground: “fix stuff,” no ticket, partial tests, and a change that touches a package nobody owns on paper. A reviewer trained on tidy open-source norms will nitpick formatting while missing the actual risk — because the signals it needs were never in the PR.</p>
 
