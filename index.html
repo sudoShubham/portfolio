@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W12G8WD90W"></script>
@@ -7,18 +7,17 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-W12G8WD90W');
 </script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Shubham Pagare — AI Platform &amp; Performance Engineer</title>
 <meta name="description" content="Shubham Pagare — Senior AI Platform & Performance Engineer. I turn complex AI systems into business outcomes — agentic systems, LLM observability, and enterprise performance across Azure, AWS, and GCP.">
 <meta name="author" content="Shubham Pagare">
 <meta name="keywords" content="Shubham Pagare, AI Engineer, Performance Engineer, LLM Observability, LangChain, LangGraph, Langfuse, Azure, AWS, GCP, AI Agents, Pune">
-<meta name="theme-color" content="#f6f7f4">
+<meta name="theme-color" content="#f7f7f7">
+<meta name="color-scheme" content="light">
 <link rel="canonical" href="https://shubhampagare.dev/">
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Shubham Pagare — AI Platform & Performance Engineer">
 <meta property="og:description" content="I turn complex AI systems into business outcomes — agentic systems, LLM observability, and enterprise performance across Azure, AWS, and GCP.">
@@ -29,628 +28,440 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Shubham Pagare — AI Platform & Performance Engineer">
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Shubham Pagare — AI Platform & Performance Engineer">
 <meta name="twitter:description" content="I turn complex AI systems into business outcomes — agentic systems, LLM observability, and enterprise performance.">
 <meta name="twitter:image" content="https://shubhampagare.dev/og-image.png">
-<!-- Favicon: monospace 'S' node mark -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080b11'/%3E%3Ccircle cx='32' cy='32' r='6' fill='none' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='32' y1='10' x2='32' y2='26' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='32' y1='38' x2='32' y2='54' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='10' y1='32' x2='26' y2='32' stroke='%235eead4' stroke-width='3'/%3E%3Cline x1='38' y1='32' x2='54' y2='32' stroke='%235eead4' stroke-width='3'/%3E%3Ccircle cx='32' cy='10' r='4' fill='%235eead4'/%3E%3Ccircle cx='54' cy='32' r='4' fill='%23fbbf24'/%3E%3Ccircle cx='32' cy='54' r='4' fill='%235eead4'/%3E%3Ccircle cx='10' cy='32' r='4' fill='%235eead4'/%3E%3C/svg%3E">
-<meta name="robots" content="index, follow"><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23083D2A'/%3E%3Ccircle cx='32' cy='32' r='8' fill='%23008841'/%3E%3C/svg%3E">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
   :root{
-    --display:'Space Grotesk',sans-serif;
-    --body:'Inter',sans-serif;
-    --mono:'JetBrains Mono',ui-monospace,monospace;
-  }
-  html[data-theme="dark"]{
-    --bg:#080b11;--bg-2:#0d1119;--ink:#e8edf4;--ink-dim:#9aa6b8;--ink-faint:#6b7789;
-    --line:#1d2533;--signal:#5eead4;--signal-dim:#2dd4bf;--warn:#fbbf24;--hot:#fb7185;
-    --glass:rgba(255,255,255,0.035);--glass-brd:rgba(255,255,255,0.08);--glass-hi:rgba(94,234,212,0.30);
-    --grid:rgba(94,234,212,0.045);--shadow:0 20px 50px -20px rgba(0,0,0,.7);
-    --c-node:#5eead4;--c-line:#234;--canvas-bg:rgba(10,15,22,0.4);
-  }
-  html[data-theme="light"]{
-    --bg:#f6f7f4;--bg-2:#eef0eb;--ink:#11161d;--ink-dim:#3d4654;--ink-faint:#6b7583;
-    --line:#dfe2db;--signal:#0d9488;--signal-dim:#0f766e;--warn:#b45309;--hot:#e11d48;
-    --glass:rgba(255,255,255,0.55);--glass-brd:rgba(17,22,29,0.07);--glass-hi:rgba(13,148,136,0.32);
-    --grid:rgba(13,148,136,0.05);--shadow:0 18px 44px -22px rgba(31,41,55,.30);
-    --c-node:#0d9488;--c-line:#cdd3cb;--canvas-bg:rgba(255,255,255,0.4);
+    --title:'Bricolage Grotesque',sans-serif;
+    --text:'Schibsted Grotesk',sans-serif;
+    --bg:#f7f7f7;--bg-2:#ececec;--ink:#022016;--ink-dim:#083d2a;--ink-faint:#4a6b5c;
+    --line:rgba(8,61,42,.14);--signal:#008841;--signal-ink:#f7f7f7;
+    --glass:rgba(247,247,247,.72);--pwc-ink:#022016;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;
-    -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .4s ease,color .4s ease}
-  ::selection{background:var(--signal);color:var(--bg)}
+  html{scroll-behavior:smooth;scrollbar-width:none}
+  html::-webkit-scrollbar{display:none}
+  body{background:var(--bg);color:var(--ink);font-family:var(--text);line-height:1.45;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--signal);color:var(--signal-ink)}
   a{color:inherit;text-decoration:none}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
-  .ico{width:1em;height:1em;stroke-width:2}
+  button{font-family:inherit;cursor:pointer}
+  .ico{width:1em;height:1em;stroke-width:1.75}
 
-  /* 3D canvas fixed behind everything */
-  #scene{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.22}
-  html[data-theme="dark"] #scene{opacity:.36}
-  .grid-overlay{position:fixed;inset:0;z-index:1;pointer-events:none;
-    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-    background-size:64px 64px;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 20%,transparent 75%)}
+  .grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.55'/></svg>")}
 
-  nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(14px);
-    background:color-mix(in srgb,var(--bg) 70%,transparent);border-bottom:1px solid transparent;transition:border-color .3s,background .4s}
-  nav.scrolled{border-bottom:1px solid var(--line)}
-  .nav-inner{max-width:1080px;margin:0 auto;padding:15px 32px;display:flex;align-items:center;justify-content:space-between}
-  .brand{font-family:var(--mono);font-size:13px;letter-spacing:.04em;display:flex;align-items:center;gap:10px;text-transform:capitalize}
-  .brand .dot{width:7px;height:7px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);animation:pulse 2.4s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-  .nav-right{display:flex;align-items:center;gap:26px}
-  .nav-links{display:flex;gap:26px;font-family:var(--mono);font-size:12.5px;color:var(--ink-dim);text-transform:capitalize}
-  .nav-links a{transition:color .2s;position:relative}
-  .nav-links a:hover{color:var(--signal)}
-  .nav-links a::before{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--signal);transition:width .25s}
-  .nav-links a:hover::before{width:100%}
-  .theme-btn{display:grid;place-items:center;width:36px;height:36px;border-radius:9px;border:1px solid var(--line);
-    background:var(--glass);color:var(--ink-dim);cursor:pointer;transition:all .25s;font-size:17px}
-  .theme-btn:hover{color:var(--signal);border-color:var(--glass-hi);transform:rotate(-12deg)}
-  .menu-btn{display:none;place-items:center;width:36px;height:36px;border-radius:9px;border:1px solid var(--line);
-    background:var(--glass);color:var(--ink-dim);cursor:pointer;transition:all .25s}
-  .menu-btn:hover{color:var(--signal);border-color:var(--glass-hi)}
-  .menu-btn .ico{width:18px;height:18px}
-  @media(max-width:720px){
-    .menu-btn{display:grid}
-    .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;
-      background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(16px);
-      border-bottom:1px solid var(--line);padding:8px 32px 16px}
-    .nav-links.open{display:flex}
-    .nav-links a{padding:12px 0;border-bottom:1px solid var(--line)}
-    .nav-links a:last-child{border-bottom:none}
-    .nav-links a::before{display:none}
+  .hud{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:20px;
+    padding:14px 32px;padding-top:max(14px,env(safe-area-inset-top));pointer-events:none;
+    background:rgba(247,247,247,.55);border-bottom:1px solid rgba(8,61,42,.1);
+    backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%)}
+  .hud a,.hud button{pointer-events:auto}
+  .hud-name{font-size:15px;font-weight:500;flex:none}
+  .hud-nav{display:flex;gap:22px;font-size:15px;margin-left:auto}
+  .hud-nav a,.hud-name{transition:opacity .2s}
+  .hud-nav a:hover,.hud-name:hover{opacity:.55}
+  .hud-mail{position:fixed;bottom:24px;right:32px;z-index:50;font-size:14px;
+    padding:8px 14px;border-radius:999px;background:rgba(247,247,247,.55);
+    border:1px solid rgba(8,61,42,.1);
+    backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%)}
+  .hud-mail:hover{opacity:.7}
+  .menu-btn{display:none;width:36px;height:36px;border:0;background:transparent;color:var(--ink);margin-left:auto}
+  @media(max-width:760px){
+    .hud{padding:10px 16px;padding-top:max(10px,env(safe-area-inset-top));padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+    .hud-name{font-size:14px;max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .hud-mail{display:none}
+    .menu-btn{display:grid;width:44px;height:44px;flex:none;position:relative;z-index:60}
+    .hud-nav{display:none;position:fixed;top:0;left:0;right:0;bottom:0;margin:0;
+      flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;
+      padding:calc(72px + env(safe-area-inset-top)) 24px max(32px,env(safe-area-inset-bottom));
+      background:rgba(247,247,247,.94);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);font-size:22px}
+    .hud-nav a{display:flex;align-items:center;min-height:52px;padding:8px 0;border-bottom:1px solid var(--line)}
+    .hud-nav.open{display:flex;pointer-events:auto}
+    body.menu-open{overflow:hidden}
   }
 
-  header{padding:110px 0 48px;position:relative;min-height:auto;display:flex;flex-direction:column;justify-content:center}
-  .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:16px;display:inline-flex;align-items:center;gap:9px;opacity:0;animation:rise .7s .2s forwards}
-  h1{font-family:var(--display);font-weight:600;font-size:clamp(36px,6vw,72px);line-height:1.0;letter-spacing:-.03em;margin-bottom:16px}
-  h1 .l1{display:block;opacity:0;animation:rise .9s .35s forwards}
-  h1 .l2{display:block;color:var(--ink-dim);font-size:clamp(20px,3.2vw,32px);line-height:1.25;font-weight:500;letter-spacing:-.02em;margin-top:10px;opacity:0;animation:rise .9s .5s forwards}
-  .lede{max-width:540px;font-size:clamp(16px,2.1vw,18px);color:var(--ink-dim);margin-bottom:24px;line-height:1.65;opacity:0;animation:rise .9s .65s forwards}
-  .lede b{color:var(--ink);font-weight:600}
-  .hero-cta{display:flex;gap:13px;flex-wrap:wrap;opacity:0;animation:rise .9s .8s forwards}
-  .btn{font-family:var(--mono);font-size:13px;padding:12px 18px;border-radius:9px;transition:all .22s;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);cursor:pointer}
-  .btn .ico{width:15px;height:15px}
-  .btn svg.brand{width:15px;height:15px;flex:none;fill:currentColor}
-  .btn.primary{background:var(--signal);color:var(--bg);border-color:var(--signal);font-weight:600}
-  .btn.primary:hover{box-shadow:0 0 26px var(--glass-hi);transform:translateY(-2px)}
-  .btn.ghost{color:var(--ink-dim);background:var(--glass);backdrop-filter:blur(8px)}
-  .btn.ghost:hover{color:var(--ink);border-color:var(--signal);transform:translateY(-2px)}
-  @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .stage{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 32px 110px;
+    position:relative;z-index:3;overflow:hidden}
+  .stage-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
+    z-index:0;pointer-events:none}
+  .stage::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(247,247,247,.18) 0%,rgba(247,247,247,.08) 42%,var(--bg) 100%)}
+  .stage h1,.stage .role,.stage-copy{position:relative;z-index:3}
+  .stage h1{font-family:var(--title);font-weight:500;font-size:clamp(36px,7.2vw,96px);line-height:.92;
+    letter-spacing:-.04em;white-space:nowrap;opacity:0;animation:rise 1s .25s forwards}
+  .role{margin-top:18px;font-size:clamp(16px,1.7vw,22px);max-width:28ch;color:var(--ink-dim);
+    opacity:0;animation:rise 1s .45s forwards}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 
-  /* Resume preview modal */
-  .modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;
-    background:rgba(8,11,17,.55);backdrop-filter:blur(8px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}
-  .modal.open{opacity:1;visibility:visible;pointer-events:auto}
-  .modal-panel{width:min(920px,100%);height:min(88vh,900px);background:var(--bg);border:1px solid var(--line);border-radius:14px;
-    box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;transform:translateY(12px) scale(.98);transition:transform .25s}
-  .modal.open .modal-panel{transform:none}
-  .modal-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);flex:none}
-  .modal-bar h3{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:-.01em}
-  .modal-actions{display:flex;align-items:center;gap:8px}
-  .modal-actions .btn{padding:8px 12px;font-size:12px}
-  .modal-frame{flex:1;min-height:0;background:var(--bg-2)}
-  .modal-frame iframe{width:100%;height:100%;border:0;display:block}
-  .modal-fallback{display:none;padding:40px 28px;text-align:center;color:var(--ink-dim);font-size:15px}
-  .modal-fallback a{color:var(--signal);text-decoration:underline;text-underline-offset:3px}
-  body.modal-open{overflow:hidden}
-  @media(max-width:560px){
-    .modal{padding:0}
-    .modal-panel{width:100%;height:100%;border-radius:0;border:none}
-  }
+  .page{position:relative;z-index:3;padding:0 32px 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  section{padding:88px 0;border-top:1px solid var(--line)}
+  .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
+  h2{font-family:var(--title);font-weight:500;font-size:clamp(32px,5vw,64px);letter-spacing:-.03em;line-height:1.02;margin-bottom:18px}
+  .lede{max-width:62ch;font-size:18px;color:var(--ink-dim);margin-bottom:36px}
 
-  .stack-strip{margin-top:32px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;opacity:0;animation:rise 1s .95s forwards}
-  .stack-strip .label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
-  .logo-pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;color:var(--ink-dim);
-    border:1px solid var(--glass-brd);background:var(--glass);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
-    padding:8px 14px;border-radius:10px;transition:all .25s;box-shadow:var(--shadow);position:relative;overflow:hidden}
-  .logo-pill::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
-    background:linear-gradient(135deg,var(--glass-hi),transparent 45%);
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.6}
-  .logo-pill > *{position:relative;z-index:2}
-  .logo-pill:hover{color:var(--ink);border-color:var(--glass-hi);transform:translateY(-3px)}
-  .logo-pill img,.logo-pill svg.lg{width:16px;height:16px;display:block;flex:none}
-  .tag svg.lg{width:13px;height:13px;display:block;flex:none}
-  svg.lg{color:var(--signal-dim)}
+  .about-copy{font-size:clamp(20px,2.4vw,28px);line-height:1.35;max-width:38em;font-family:var(--title);font-weight:400}
+  .about-copy b{font-weight:600}
+  .points{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:18px 40px;max-width:720px}
+  .points span{display:block;padding-top:12px;border-top:1px solid var(--line);font-size:15px;color:var(--ink-dim)}
+  .metrics{margin-top:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .metric .num{font-family:var(--title);font-size:clamp(28px,3.4vw,42px);letter-spacing:-.03em;line-height:1}
+  .metric .lab{margin-top:8px;font-size:13px;color:var(--ink-dim);max-width:18ch}
 
-  section{padding:52px 0;position:relative}
-  .sec-label{font-family:var(--mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--signal);margin-bottom:10px;display:flex;align-items:center;gap:11px}
-  .sec-label::before{content:"";width:24px;height:1px;background:var(--signal)}
-  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,36px);letter-spacing:-.02em;margin-bottom:10px}
-  .sec-intro{max-width:620px;color:var(--ink-dim);font-size:15.5px;margin-bottom:28px}
+  .traits{display:grid;grid-template-columns:1fr 1fr;gap:28px 48px}
+  .trait h3{font-family:var(--title);font-size:22px;font-weight:500;margin-bottom:8px}
+  .trait p{color:var(--ink-dim);font-size:16px;max-width:38ch}
 
-  .glass{background:var(--glass);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
-    border:1px solid var(--glass-brd);border-radius:14px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-  .glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
-    background:linear-gradient(135deg,var(--glass-hi),transparent 40%);
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.6;z-index:1}
-
-  .traits{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-  .trait{padding:20px 20px;position:relative}
-  .trait > *{position:relative;z-index:2}
-  .trait .ti{color:var(--signal);width:22px;height:22px;margin-bottom:10px;display:block}
-  .trait h3{font-family:var(--display);font-size:17px;font-weight:600;letter-spacing:-.01em;margin-bottom:5px}
-  .trait p{font-size:14.5px;color:var(--ink-dim);line-height:1.55}
-  @media(max-width:560px){.traits{grid-template-columns:1fr}}
-  /* About */
-  .about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;align-items:stretch}
-  @media(max-width:760px){.about-grid{grid-template-columns:1fr}}
-  .about-card{padding:22px 24px}
-  .about-card > *{position:relative;z-index:2}
-  .about-card p{font-size:16px;color:var(--ink-dim);line-height:1.65;margin-bottom:14px}
-  .about-card p:last-child{margin-bottom:0}
-  .about-card b{color:var(--ink);font-weight:600}
-  .about-points{padding:16px 22px;display:flex;flex-direction:column;gap:0;justify-content:center}
-  .about-points > *{position:relative;z-index:2}
-  .about-point{display:flex;align-items:flex-start;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
-  .about-point:last-child{border-bottom:none}
-  .about-point .ico{width:17px;height:17px;color:var(--signal);flex:none;margin-top:2px}
-  .about-point span{font-size:14.5px;color:var(--ink);font-weight:500}
-  /* Metrics strip */
-  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
-  .metric{padding:16px 16px;position:relative}
-  .metric > *{position:relative;z-index:2}
-  .metric .mi{color:var(--signal);width:16px;height:16px;margin-bottom:8px;display:block}
-  .metric .num{font-family:var(--display);font-size:clamp(22px,3.2vw,30px);font-weight:700;letter-spacing:-.03em;color:var(--ink);line-height:1}
-  .metric .lab{font-size:13px;color:var(--ink-dim);margin-top:6px;line-height:1.4}
-  @media(max-width:760px){.metrics{grid-template-columns:1fr 1fr}}
-
-  .timeline{position:relative;padding-left:28px}
-  .timeline::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,var(--signal),var(--line) 60%,transparent)}
-  .job{position:relative;padding:0 0 14px}
-  .job .card{padding:18px 20px}
-  .job .card > *{position:relative;z-index:2}
-  .job::before{content:"";position:absolute;left:-28px;top:20px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--signal);box-shadow:0 0 0 4px var(--glass-hi);z-index:3}
-  .job .when{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.03em}
-  .job h3{font-family:var(--display);font-size:19px;font-weight:600;margin:4px 0 2px;letter-spacing:-.01em}
-  .job .org{font-size:14px;color:var(--signal-dim);font-weight:600;margin-bottom:2px;display:flex;align-items:center;gap:8px}
-  .job .org .ico{width:16px;height:16px}
-  .job .client{font-family:var(--mono);font-size:12px;color:var(--ink-dim);margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .client-chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--glass-brd);background:var(--glass);
-    backdrop-filter:blur(8px);padding:4px 10px 4px 8px;border-radius:7px;color:var(--ink);font-weight:500}
-  .client-chip svg{height:13px;width:auto;display:block;flex:none}
+  .job{display:grid;grid-template-columns:160px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--line)}
+  .job:first-of-type{border-top:1px solid var(--line)}
+  .when{font-size:13px;color:var(--ink-faint);padding-top:6px}
+  .job h3{font-family:var(--title);font-size:26px;font-weight:500;letter-spacing:-.02em}
+  .org{margin:4px 0 10px;font-size:15px;color:var(--ink-faint)}
+  .client{font-size:13px;color:var(--ink-faint);margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .client-chip{display:inline-flex;align-items:center;gap:7px}
+  .client-chip svg{height:13px;width:auto}
   .client-chip .pwc-logo{height:15px}
-  html[data-theme="dark"]{--pwc-ink:#f2f4f8}
-  html[data-theme="light"]{--pwc-ink:#111}
-  .client .pre{color:var(--ink-faint)}
   .job ul{list-style:none;display:flex;flex-direction:column;gap:8px}
-  .job li{position:relative;padding-left:24px;color:var(--ink-dim);font-size:15px;line-height:1.5}
-  .job li .ico{position:absolute;left:0;top:4px;width:14px;height:14px;color:var(--signal)}
+  .job li{color:var(--ink-dim);font-size:15.5px;padding-left:14px;position:relative}
+  .job li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--signal)}
   .job li b{color:var(--ink);font-weight:600}
 
-  .skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media(max-width:720px){.skill-grid{grid-template-columns:1fr}}
-  .skill-card{padding:18px;transition:transform .25s}
-  .skill-card > *{position:relative;z-index:2}
-  .skill-card:hover{transform:translateY(-3px)}
-  .skill-card .cat{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--signal);margin-bottom:12px;display:flex;align-items:center;gap:10px}
-  .skill-card .cat .ico{width:16px;height:16px}
-  .tags{display:flex;flex-wrap:wrap;gap:6px}
-  .tag{font-family:var(--mono);font-size:12px;color:var(--ink-dim);border:1px solid var(--line);background:color-mix(in srgb,var(--bg-2) 60%,transparent);padding:5px 10px;border-radius:7px;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
-  .tag img{width:13px;height:13px}
-  .tag .ico{width:13px;height:13px;color:var(--signal-dim);flex:none}
-  .skill-card:hover .tag{border-color:var(--glass-hi)}
+  .skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px 56px}
+  .skill-card .cat{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
+  .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .tag{font-size:14px;border:1px solid var(--line);padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;color:var(--ink-dim)}
+  .tag img,.tag svg.lg{width:13px;height:13px}
+  .tag .ico{width:13px;height:13px}
 
-  .blog-list{display:flex;flex-direction:column;gap:12px}
-  .blog-card{display:block;padding:20px 22px;transition:transform .25s,border-color .25s}
-  .blog-card > *{position:relative;z-index:2}
-  .blog-card:hover{transform:translateY(-3px)}
-  .blog-card .bmeta{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.04em;margin-bottom:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .blog-card .bmeta .dot{width:3px;height:3px;border-radius:50%;background:var(--ink-faint)}
-  .blog-card h3{font-family:var(--display);font-size:20px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px}
-  .blog-card p{color:var(--ink-dim);font-size:14.5px;margin-bottom:12px;max-width:720px}
-  .blog-card .bread{font-family:var(--mono);font-size:12.5px;color:var(--signal);display:inline-flex;align-items:center;gap:6px}
-  .blog-card .bread .ico{width:14px;height:14px}
-  .blog-card:hover .bread{gap:10px}
+  .blog-card{display:block;padding:28px 0;border-bottom:1px solid var(--line)}
+  .blog-card:first-of-type{border-top:1px solid var(--line)}
+  .bmeta{font-size:13px;color:var(--ink-faint);margin-bottom:10px;display:flex;gap:10px;flex-wrap:wrap}
+  .blog-card h3{font-family:var(--title);font-size:clamp(22px,3vw,34px);font-weight:500;letter-spacing:-.025em;margin-bottom:8px}
+  .blog-card p{color:var(--ink-dim);max-width:62ch;font-size:16px}
+  .bread{display:inline-block;margin-top:12px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal-ink);
+    background:var(--signal);padding:5px 12px;border-radius:999px}
 
-  .edu-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:12px}
-  @media(max-width:720px){.edu-grid{grid-template-columns:1fr}}
-  .edu-card{padding:20px}
-  .edu-card > *{position:relative;z-index:2}
-  .edu-card .eh{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--signal)}
-  .edu-card .eh .ico{width:16px;height:16px}
-  .edu-card h3{font-family:var(--display);font-size:18px;font-weight:600;margin-bottom:4px}
-  .edu-card .sub{color:var(--signal-dim);font-size:13.5px;font-family:var(--mono);margin-bottom:2px}
-  .edu-card .meta{color:var(--ink-faint);font-size:12.5px;font-family:var(--mono)}
-  .cert-list{display:flex;flex-direction:column;gap:10px}
-  .cert{display:flex;align-items:flex-start;gap:11px;font-size:14px;color:var(--ink-dim)}
-  .cert .yr{font-family:var(--mono);font-size:12px;color:var(--signal);flex:none;margin-top:2px}
-  .award{margin-top:14px;border-top:1px solid var(--line);padding-top:12px;font-size:13px;color:var(--ink-dim);font-family:var(--mono);line-height:1.7;display:flex;flex-direction:column;gap:6px}
-  .award span.row{display:flex;align-items:center;gap:9px}
-  .award .ico{width:15px;height:15px;color:var(--warn);flex:none}
-  .award b{color:var(--ink);font-weight:600}
+  .edu-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px}
+  .edu-card h3{font-family:var(--title);font-size:26px;font-weight:500;margin:8px 0}
+  .sub{color:var(--ink-faint)}
+  .meta{color:var(--ink-faint);font-size:14px;margin-top:4px}
+  .cert{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink-dim)}
+  .yr{color:var(--ink-faint);width:48px;flex:none}
+  .award{margin-top:18px;font-size:14px;color:var(--ink-dim);display:flex;flex-direction:column;gap:8px}
 
-  .contact{text-align:center;padding:64px 0 56px}
-  .contact h2{font-size:clamp(28px,4.5vw,44px);margin-bottom:12px}
-  .contact .grad{background:linear-gradient(90deg,var(--signal),var(--warn));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .contact p{color:var(--ink-dim);max-width:480px;margin:0 auto 24px;font-size:16px}
-  .links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .contact{text-align:left}
+  .contact h2{max-width:14ch}
+  .links{display:flex;flex-wrap:wrap;gap:10px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:transparent;
+    color:var(--ink);padding:12px 16px;border-radius:999px;font-size:14px}
+  .btn.primary{background:var(--signal);color:var(--signal-ink);border-color:var(--signal)}
+  .btn svg.brand{width:15px;height:15px;fill:currentColor}
 
-  footer{border-top:1px solid var(--line);padding:20px 0;position:relative;z-index:2}
-  .foot-inner{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;color:var(--ink-faint);flex-wrap:wrap;gap:10px}
+  footer{position:relative;z-index:3;padding:24px 32px 88px;font-size:13px;color:var(--ink-faint);
+    display:flex;justify-content:space-between}
 
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
   .reveal.in{opacity:1;transform:none}
-  .stagger > *{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
-  .stagger.in > *{opacity:1;transform:none}
-  .stagger.in > *:nth-child(1){transition-delay:0s}
-  .stagger.in > *:nth-child(2){transition-delay:.08s}
-  .stagger.in > *:nth-child(3){transition-delay:.16s}
-  .stagger.in > *:nth-child(4){transition-delay:.24s}
+
+  .modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;
+    background:rgba(2,32,22,.55);backdrop-filter:blur(8px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility .25s}
+  .modal.open{opacity:1;visibility:visible;pointer-events:auto}
+  .modal-panel{width:min(920px,100%);height:min(88vh,900px);background:var(--bg);border:1px solid var(--line);border-radius:18px;
+    display:flex;flex-direction:column;overflow:hidden}
+  .modal-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+  .modal-bar h3{font-family:var(--title);font-size:18px;font-weight:500}
+  .modal-actions{display:flex;gap:8px}
+  .modal-frame{flex:1;min-height:0;background:var(--bg-2)}
+  .modal-frame iframe{width:100%;height:100%;border:0}
+  .modal-fallback{display:none;padding:40px 28px;text-align:center;color:var(--ink-dim)}
+  .modal-fallback a{color:var(--signal);text-decoration:underline}
+  body.modal-open{overflow:hidden}
 
   @media(prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:background .3s,color .3s,border-color .3s!important}
-    .reveal,.stagger > *{opacity:1;transform:none}
-    #scene{display:none}
+    *{animation:none!important;transition:background .3s,color .3s!important}
+    .reveal{opacity:1;transform:none}
   }
-
-  /* —— Mobile polish —— */
-  @media(max-width:720px){
-    .wrap{padding:0 20px}
-    .nav-inner{padding:12px 20px}
-    .nav-right{gap:10px}
-    .nav-links{padding:10px 20px 18px;max-height:min(70vh,420px);overflow-y:auto;
-      background:color-mix(in srgb,var(--bg) 96%,transparent)}
-    .nav-links a{padding:14px 0;font-size:14px;min-height:44px;display:flex;align-items:center}
-    header{padding:96px 0 36px}
-    .eyebrow{font-size:11px;letter-spacing:.08em;line-height:1.45;max-width:100%;flex-wrap:wrap}
-    h1{font-size:clamp(30px,9vw,40px);line-height:1.08;margin-bottom:12px}
-    h1 .l2{font-size:clamp(17px,4.6vw,22px);margin-top:8px;line-height:1.35}
-    .lede{font-size:15.5px;margin-bottom:20px}
-    .hero-cta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-    .hero-cta .btn{justify-content:center;width:100%;min-height:44px;padding:10px 8px;font-size:12px;gap:6px}
-    .hero-cta .btn.primary{grid-column:1 / -1;padding:12px 14px;font-size:12.5px;gap:8px}
-    .stack-strip{margin-top:24px;gap:8px}
-    .stack-strip .label{width:100%;margin-bottom:2px}
-    .logo-pill{padding:7px 11px;font-size:12px}
-    section{padding:40px 0}
-    h2{font-size:clamp(24px,6.5vw,30px)}
-    .sec-intro{font-size:14.5px;margin-bottom:22px}
-    .about-card{padding:18px 18px}
-    .about-card p{font-size:15px}
-    .about-points{padding:12px 16px}
-    .metric{padding:14px}
-    .metric .lab{font-size:12.5px}
-    .timeline{padding-left:22px}
-    .job::before{left:-22px;width:10px;height:10px;top:18px}
-    .job .card{padding:16px}
-    .job h3{font-size:17px;line-height:1.25}
-    .job li{font-size:14px;padding-left:22px}
-    .job .client{gap:6px}
-    .client-chip{max-width:100%}
-    .blog-card{padding:16px 16px}
-    .blog-card h3{font-size:17px;line-height:1.3}
-    .blog-card p{font-size:14px}
-    .edu-card{padding:16px}
-    .award span.row{align-items:flex-start}
-    .contact{padding:48px 0 44px}
-    .contact h2{font-size:clamp(26px,8vw,34px)}
-    .contact p{font-size:15px;padding:0 4px}
-    .links{flex-direction:column;align-items:stretch;gap:10px}
-    .links .btn{justify-content:center;min-height:46px;width:100%}
-    .foot-inner{justify-content:center;text-align:center;gap:6px}
-    .modal-bar{flex-wrap:wrap;padding:12px 14px}
-    .modal-actions{flex-wrap:wrap;width:100%;justify-content:flex-end}
-    .modal-actions .btn{min-height:40px}
+  @media(max-width:760px){
+    .stage,.page{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+    .stage{padding:0;min-height:100svh;display:block}
+    .stage-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:82% 45%}
+    .stage::after{display:block;background:linear-gradient(180deg,transparent 38%,rgba(247,247,247,.55) 68%,var(--bg) 100%)}
+    .stage-copy{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 max(18px,env(safe-area-inset-left)) max(28px,env(safe-area-inset-bottom));
+      background:none;border:none;border-radius:0;backdrop-filter:none;-webkit-backdrop-filter:none}
+    .stage h1{white-space:normal;font-size:clamp(32px,10vw,42px);line-height:1.08;letter-spacing:-.03em;margin:0}
+    .role{font-size:15px;margin:8px 0 0;max-width:none}
+    section{padding:48px 0}
+    h2{font-size:clamp(26px,8vw,34px)}
+    .lede{font-size:16px;margin-bottom:24px}
+    .kicker{font-size:12px;letter-spacing:.1em}
+    .points,.traits,.skill-grid,.edu-grid,.metrics{grid-template-columns:1fr;gap:18px}
+    .metrics{grid-template-columns:1fr 1fr}
+    .metric .lab{max-width:none}
+    .job{grid-template-columns:1fr;gap:6px;padding:22px 0}
+    .job h3{font-size:20px}
+    .job li{font-size:14.5px}
+    .blog-card{padding:22px 0}
+    .blog-card h3{font-size:20px;line-height:1.25}
+    .edu-card h3{font-size:20px}
+    footer{padding:16px max(18px,env(safe-area-inset-left)) max(28px,env(safe-area-inset-bottom));flex-direction:column;gap:6px;text-align:center}
+    .about-copy{font-size:18px}
+    .links{flex-direction:column}
+    .links .btn,.btn{justify-content:center;min-height:46px;width:100%}
+    .modal{padding:0}
+    .modal-panel{width:100%;height:100%;border-radius:0;border:none}
+    .modal-bar{flex-wrap:wrap;gap:8px}
   }
   @media(max-width:420px){
-    .wrap{padding:0 16px}
-    .nav-inner{padding:12px 16px}
-    .nav-links{padding:8px 16px 16px}
-    .brand{font-size:12px;gap:8px}
-    .hero-cta{gap:6px}
-    .hero-cta .btn{padding:10px 6px;font-size:11.5px;gap:5px}
-    .hero-cta .btn.primary{padding:12px 14px;font-size:12.5px;gap:8px}
     .metrics{grid-template-columns:1fr}
-    .metric .num{font-size:26px}
-    header{padding:88px 0 28px}
-    .timeline{padding-left:18px}
-    .job::before{left:-18px}
-  }
-  @media(hover:none){
-    .btn.primary:hover,.btn.ghost:hover,.logo-pill:hover,.skill-card:hover,.blog-card:hover{transform:none;box-shadow:none}
-    .blog-card:hover .bread{gap:6px}
-    .theme-btn:hover{transform:none}
-  }
-  @supports(padding:max(0px)){
-    @media(max-width:720px){
-      .wrap{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
-      .nav-inner{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
-    }
-    @media(max-width:420px){
-      .wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
-      .nav-inner{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
-    }
+    .stage h1{font-size:30px}
   }
 </style>
 </head>
 <body>
 
-<canvas id="scene"></canvas>
-<div class="grid-overlay"></div>
+<div class="grain"></div>
 
-<nav id="nav">
-  <div class="nav-inner">
-    <a href="#top" class="brand"><span class="dot"></span>shubham.pagare</a>
-    <div class="nav-right">
-      <div class="nav-links" id="navLinks">
-        <a href="#about">about</a>
-        <a href="#work">work</a>
-        <a href="#skills">skills</a>
-        <a href="#writing">writing</a>
-        <a href="#education">education</a>
-        <a href="#contact">contact</a>
-      </div>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><i data-lucide="menu" class="ico" id="menuIcon"></i></button>
-      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><i data-lucide="sun" class="ico" id="themeIcon"></i></button>
-    </div>
-  </div>
-</nav>
-
-<div class="wrap" id="top">
-  <header>
-    <div class="eyebrow"><i data-lucide="cpu" class="ico"></i> AI Platform &amp; Performance Engineer · Pune, India</div>
-    <h1>
-      <span class="l1">Shubham Pagare</span>
-      <span class="l2">I turn complex AI systems into business outcomes.</span>
-    </h1>
-    <p class="lede">Senior engineer with <b>5+ years</b> building scalable AI systems, LLM observability, and enterprise performance across Azure, AWS, and GCP — for Fortune 500 clients.</p>
-    <div class="hero-cta">
-      <a class="btn primary" href="#contact"><i data-lucide="mail" class="ico"></i> Get in touch</a>
-      <button type="button" class="btn ghost" data-resume-preview><i data-lucide="file-text" class="ico"></i> Resume</button>
-      <a class="btn ghost" href="https://github.com/sudoShubham" target="_blank" rel="noopener"><svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.32.47-2.39 1.24-3.23-.12-.31-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.05.14 3 .4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.18.77.84 1.24 1.91 1.24 3.23 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.21.7.83.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg> GitHub</a>
-      <a class="btn ghost" href="https://linkedin.com/in/shubhampagare/" target="_blank" rel="noopener"><svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg> LinkedIn</a>
-    </div>
-
-    <div class="stack-strip">
-      <span class="label">Core stack</span>
-      <span class="logo-pill"><svg class="lg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 13.05c0 .3.03.55.09.73.07.18.15.38.27.6.04.06.06.13.06.18 0 .08-.05.16-.15.24l-.5.33a.4.4 0 0 1-.2.07c-.08 0-.16-.04-.23-.11a2.4 2.4 0 0 1-.28-.36 6 6 0 0 1-.24-.46c-.6.71-1.36 1.07-2.27 1.07-.65 0-1.17-.19-1.55-.56-.38-.37-.57-.86-.57-1.48 0-.65.23-1.18.7-1.58.46-.4 1.08-.6 1.87-.6.26 0 .53.02.81.06.28.04.57.1.88.17v-.55c0-.58-.12-.99-.36-1.22-.25-.24-.67-.35-1.27-.35-.27 0-.55.03-.84.1-.29.07-.57.16-.84.27a2.2 2.2 0 0 1-.27.1.5.5 0 0 1-.13.02c-.11 0-.16-.08-.16-.25v-.39c0-.13.02-.22.06-.28a.6.6 0 0 1 .23-.17c.27-.14.6-.26.97-.35.38-.1.78-.14 1.2-.14.92 0 1.59.21 2.02.63.42.41.63 1.05.63 1.9v2.5zm-3.13 1.17c.25 0 .51-.05.78-.14.27-.09.51-.25.71-.47.12-.14.21-.3.25-.48.05-.18.08-.4.08-.65v-.31a6.4 6.4 0 0 0-.7-.13 5.7 5.7 0 0 0-.72-.05c-.51 0-.89.1-1.14.31-.25.2-.37.49-.37.87 0 .35.09.62.28.8.18.18.43.27.55.27zm6.19.83c-.15 0-.25-.02-.31-.08-.07-.05-.12-.16-.17-.3L7.7 8.95a1.3 1.3 0 0 1-.07-.31c0-.12.06-.19.18-.19h.78c.15 0 .26.03.32.08.07.05.11.16.16.3l1.31 5.17 1.22-5.17c.04-.14.08-.25.15-.3.07-.05.18-.08.33-.08h.64c.15 0 .26.03.33.08.07.05.12.16.15.3l1.23 5.23 1.35-5.23c.05-.14.1-.25.16-.3.07-.05.18-.08.32-.08h.74c.12 0 .19.06.19.19 0 .04 0 .08-.02.13a1 1 0 0 1-.05.18l-1.88 6.06c-.05.14-.1.25-.17.3-.07.05-.17.08-.31.08h-.69c-.15 0-.26-.03-.33-.08-.07-.06-.12-.16-.15-.31L13.31 9.9l-1.21 5.04c-.04.15-.08.25-.15.31-.07.05-.18.08-.33.08h-.45zm9.9.22a5 5 0 0 1-1.18-.14c-.39-.09-.69-.19-.89-.31-.12-.07-.21-.15-.24-.22a.56.56 0 0 1-.05-.22v-.41c0-.17.06-.25.18-.25.05 0 .1 0 .14.02l.21.09c.28.12.59.22.91.29.33.06.65.1.98.1.52 0 .92-.09 1.2-.27.28-.18.43-.45.43-.78a.7.7 0 0 0-.2-.51c-.13-.14-.37-.26-.72-.38l-1.04-.32c-.52-.16-.91-.4-1.15-.72-.24-.31-.37-.66-.37-1.04 0-.3.07-.56.2-.79.12-.23.3-.43.51-.59.22-.16.46-.28.75-.36.28-.08.58-.12.89-.12.16 0 .32.01.48.03.16.02.32.05.47.08l.42.11c.13.04.23.08.3.12.1.06.17.12.21.18.04.06.06.14.06.24v.38c0 .17-.06.26-.18.26a.8.8 0 0 1-.3-.1 3.6 3.6 0 0 0-1.51-.3c-.47 0-.84.07-1.09.23-.26.15-.39.39-.39.72 0 .21.08.39.23.53.15.14.42.27.8.4l1.02.32c.51.16.88.39 1.1.68.22.29.33.62.33 1 0 .3-.06.57-.18.81-.13.24-.3.45-.52.62-.22.17-.49.3-.79.39-.32.1-.66.14-1.03.14zM21.7 19.06c-2.62 1.94-6.43 2.97-9.71 2.97-4.6 0-8.74-1.7-11.87-4.53-.25-.22-.03-.53.27-.36 3.39 1.97 7.57 3.16 11.9 3.16 2.91 0 6.11-.6 9.06-1.85.44-.19.81.29.35.61zm.79-.9c-.34-.43-2.22-.2-3.07-.1-.26.03-.3-.19-.06-.36 1.5-1.06 3.96-.75 4.25-.4.29.36-.08 2.82-1.49 4-.21.18-.42.08-.32-.15.32-.78 1.04-2.55.69-2.99z"/></svg>AWS</span>
-      <span class="logo-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="">Azure</span>
-      <span class="logo-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="">GCP</span>
-      <span class="logo-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="">Python</span>
-      <span class="logo-pill"><svg class="lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3c0 .5.13.97.35 1.38A4 4 0 0 0 5 10a4 4 0 0 0 .5 1.94A3.5 3.5 0 0 0 4 15a3.5 3.5 0 0 0 5.5 2.87V19a2.5 2.5 0 0 0 5 0v-1.13A3.5 3.5 0 0 0 20 15a3.5 3.5 0 0 0-1.5-3.06A4 4 0 0 0 19 10a4 4 0 0 0-4.35-3.62c.22-.41.35-.88.35-1.38a3 3 0 0 0-3-3Z"/><path d="M12 8v8M8.5 11h7M9 14h6"/></svg>LLM</span>
-      <span class="logo-pill"><img src="icons/langchain.png" alt="">LangChain</span>
-      <span class="logo-pill"><img src="https://unpkg.com/@lobehub/icons-static-svg@1.69.0/icons/langgraph-color.svg" alt="">LangGraph</span>
-      <span class="logo-pill"><img src="https://unpkg.com/@lobehub/icons-static-svg@1.69.0/icons/langfuse-color.svg" alt="">Langfuse</span>
-    </div>
-
-  </header>
+<div class="hud">
+  <a href="#top" class="hud-name" data-cursor="Home">Shubham Pagare</a>
+  <nav class="hud-nav" id="navLinks">
+    <a href="#work" data-cursor="Work">Work</a>
+    <a href="#about" data-cursor="About">About</a>
+    <a href="#skills" data-cursor="Stack">Skills</a>
+    <a href="#writing" data-cursor="Lab">Writing</a>
+    <a href="#contact" data-cursor="Hello">Contact</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><i data-lucide="menu" class="ico" id="menuIcon"></i></button>
 </div>
+<a class="hud-mail" href="mailto:shubhamp2017@gmail.com" data-cursor="Copy">shubhamp2017@gmail.com</a>
 
-<div class="wrap">
+<section class="stage" id="top">
+  <img class="stage-photo" src="images/image_desktop.jpg" alt="Minimal office desk" width="1920" height="1024" fetchpriority="high">
+  <div class="stage-copy">
+    <h1>Shubham Pagare</h1>
+    <p class="role">AI platform &amp; performance engineer</p>
+  </div>
+</section>
+
+<div class="page">
+  <div class="wrap">
   <section id="about">
-    <div class="sec-label reveal">About</div>
+    <div class="kicker reveal">About</div>
     <h2 class="reveal">Engineer, translator, builder</h2>
-    <p class="sec-intro reveal">I sit where business goals meet technical reality — and make sure both win.</p>
-    <div class="about-grid stagger reveal">
-      <div class="about-card glass">
-        <p>I turn ideas into shipped, scalable systems — and make sure the engineering serves a real outcome. Most of my work lives in the gap between <b>stakeholders and development</b>: clarifying what's needed, surfacing tradeoffs early, and making complicated things feel simple.</p>
-      </div>
-      <div class="about-points glass">
-        <div class="about-point"><i data-lucide="briefcase" class="ico"></i><span>Business context, not just the code</span></div>
-        <div class="about-point"><i data-lucide="rocket" class="ico"></i><span>Ideas → shipped reality</span></div>
-        <div class="about-point"><i data-lucide="git-merge" class="ico"></i><span>Bridge stakeholders and engineering</span></div>
-        <div class="about-point"><i data-lucide="sparkles" class="ico"></i><span>Make complex systems feel simple</span></div>
-      </div>
+    <p class="about-copy reveal">I sit where business goals meet technical reality, and make sure both win. I turn ideas into shipped, scalable systems, living in the gap between <b>stakeholders and development</b>: clarifying what's needed, surfacing tradeoffs early, and making complicated things feel simple.</p>
+    <div class="points reveal">
+      <span>Business context, not just the code</span>
+      <span>Ideas → shipped reality</span>
+      <span>Bridge stakeholders and engineering</span>
+      <span>Make complex systems feel simple</span>
     </div>
-
-    <div class="metrics stagger reveal">
-      <div class="metric glass"><i data-lucide="gauge" class="mi"></i><div class="num">120%</div><div class="lab">response-time gain on WebSocket bottlenecks</div></div>
-      <div class="metric glass"><i data-lucide="zap" class="mi"></i><div class="num">10×</div><div class="lab">execution speedup, Python → C++</div></div>
-      <div class="metric glass"><i data-lucide="timer" class="mi"></i><div class="num">~6 min</div><div class="lab">analysis cut from a 1-hour task</div></div>
-      <div class="metric glass"><i data-lucide="badge-dollar-sign" class="mi"></i><div class="num">100%</div><div class="lab">tool-licensing savings vs LoadRunner</div></div>
+    <div class="metrics reveal">
+      <div class="metric"><div class="num">120%</div><div class="lab">response-time gain on WebSocket bottlenecks</div></div>
+      <div class="metric"><div class="num">10×</div><div class="lab">execution speedup, Python → C++</div></div>
+      <div class="metric"><div class="num">~6 min</div><div class="lab">analysis cut from a 1-hour task</div></div>
+      <div class="metric"><div class="num">100%</div><div class="lab">tool-licensing savings vs LoadRunner</div></div>
     </div>
   </section>
 
   <section id="impact">
-    <div class="sec-label reveal">How I work</div>
+    <div class="kicker reveal">How I work</div>
     <h2 class="reveal">The way I think</h2>
-    <p class="sec-intro reveal">The instincts behind the tools — how I approach systems, diagnostics, and hard problems.</p>
-    <div class="traits stagger reveal">
-      <div class="trait glass"><i data-lucide="compass" class="ti"></i><h3>Architect Mindset</h3><p>See the whole system before the parts — design for scale, trace the data, anticipate where it breaks.</p></div>
-      <div class="trait glass"><i data-lucide="search" class="ti"></i><h3>Deep Diagnostics</h3><p>Comfortable in the weeds: thread dumps, memory leaks, latency hotspots, token-level profiling.</p></div>
-      <div class="trait glass"><i data-lucide="puzzle" class="ti"></i><h3>Problem Solving</h3><p>Break ambiguous, multi-layer issues into root causes — then ship the fix that actually holds.</p></div>
-      <div class="trait glass"><i data-lucide="messages-square" class="ti"></i><h3>Stakeholder Clarity</h3><p>Translate complex engineering into decisions leaders can act on.</p></div>
+    <p class="lede reveal">The instincts behind the tools — how I approach systems, diagnostics, and hard problems.</p>
+    <div class="traits reveal">
+      <div class="trait"><h3>Architect Mindset</h3><p>See the whole system before the parts — design for scale, trace the data, anticipate where it breaks.</p></div>
+      <div class="trait"><h3>Deep Diagnostics</h3><p>Comfortable in the weeds: thread dumps, memory leaks, latency hotspots, token-level profiling.</p></div>
+      <div class="trait"><h3>Problem Solving</h3><p>Break ambiguous, multi-layer issues into root causes — then ship the fix that actually holds.</p></div>
+      <div class="trait"><h3>Stakeholder Clarity</h3><p>Translate complex engineering into decisions leaders can act on.</p></div>
     </div>
   </section>
 
   <section id="work">
-    <div class="sec-label reveal">Experience</div>
+    <div class="kicker reveal">Experience</div>
     <h2 class="reveal">Where I've shipped</h2>
-    <p class="sec-intro reveal">A run through the roles, the clients, and the measurable outcomes — from AI agent platforms to deep performance forensics.</p>
+    <p class="lede reveal">A run through the roles, the clients, and the measurable outcomes — from AI agent platforms to deep performance forensics.</p>
 
-    <div class="timeline">
-      <div class="job reveal">
-        <div class="card glass">
-          <div class="when">Dec 2024 — Present</div>
-          <h3>Senior Performance &amp; AI Engineer</h3>
-          <div class="org"><i data-lucide="building-2" class="ico"></i> Waynautic Technologies</div>
-          <div class="client"><span class="pre">Client:</span><span class="client-chip"><svg class="pwc-logo" viewBox="0 0 100 56" xmlns="http://www.w3.org/2000/svg" aria-label="PwC"><g fill="#EB5C2E"><polygon points="58,18 78,18 74,25 54,25"/><polygon points="63,9 83,9 79,16 59,16"/><polygon points="68,0 88,0 84,7 64,7"/></g><text x="0" y="50" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="46" fill="var(--pwc-ink,#111)" letter-spacing="-2">pwc</text></svg> PwC US</span><span class="pre">— AI-based product on Azure Cloud</span></div>
-          <ul>
-            <li><i data-lucide="git-branch" class="ico"></i>Designed and deployed <b>multi-agent AI workflows</b> with LangChain, LangGraph, and Azure OpenAI to automate QA and business processes.</li>
-            <li><i data-lucide="activity" class="ico"></i>Built a custom <b>E2E trace tracking tool</b> with Langfuse for deep LLM pipeline visibility — surfacing latency hotspots, token inefficiencies, and failure points.</li>
-            <li><i data-lucide="trending-down" class="ico"></i>Led AI performance engineering across LLM analysis, load-testing strategy, and Azure optimization, driving <b>measurable cost reduction</b>.</li>
-            <li><i data-lucide="users" class="ico"></i>Identified critical architectural bottlenecks and shaped design decisions in direct review with PwC US stakeholders.</li>
-          </ul>
-        </div>
+    <div class="job reveal">
+      <div class="when">Dec 2024 — Present</div>
+      <div>
+        <h3>Senior Performance &amp; AI Engineer</h3>
+        <div class="org">Waynautic Technologies</div>
+        <div class="client"><span>Client:</span><span class="client-chip"><svg class="pwc-logo" viewBox="0 0 100 56" xmlns="http://www.w3.org/2000/svg" aria-label="PwC"><g fill="#EB5C2E"><polygon points="58,18 78,18 74,25 54,25"/><polygon points="63,9 83,9 79,16 59,16"/><polygon points="68,0 88,0 84,7 64,7"/></g><text x="0" y="50" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="46" fill="var(--pwc-ink,#111)" letter-spacing="-2">pwc</text></svg> PwC US</span><span>— AI-based product on Azure Cloud</span></div>
+        <ul>
+          <li>Designed and deployed <b>multi-agent AI workflows</b> with LangChain, LangGraph, and Azure OpenAI to automate QA and business processes.</li>
+          <li>Built a custom <b>E2E trace tracking tool</b> with Langfuse for deep LLM pipeline visibility — surfacing latency hotspots, token inefficiencies, and failure points.</li>
+          <li>Led AI performance engineering across LLM analysis, load-testing strategy, and Azure optimization, driving <b>measurable cost reduction</b>.</li>
+          <li>Identified critical architectural bottlenecks and shaped design decisions in direct review with PwC US stakeholders.</li>
+        </ul>
       </div>
+    </div>
 
-      <div class="job reveal">
-        <div class="card glass">
-          <div class="when">Sept 2023 — Nov 2024</div>
-          <h3>Performance Engineer</h3>
-          <div class="org"><i data-lucide="building-2" class="ico"></i> Zensoft Services</div>
-          <div class="client"><span class="pre">Client:</span><span class="client-chip"><svg class="pwc-logo" viewBox="0 0 100 56" xmlns="http://www.w3.org/2000/svg" aria-label="PwC"><g fill="#EB5C2E"><polygon points="58,18 78,18 74,25 54,25"/><polygon points="63,9 83,9 79,16 59,16"/><polygon points="68,0 88,0 84,7 64,7"/></g><text x="0" y="50" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="46" fill="var(--pwc-ink,#111)" letter-spacing="-2">pwc</text></svg> PwC US</span></div>
-          <ul>
-            <li><i data-lucide="gauge" class="ico"></i>Achieved <b>120% response-time improvement</b> and ~0.1% error rate resolving multi-layer WebSocket performance issues.</li>
-            <li><i data-lucide="wrench" class="ico"></i>Built a custom <b>JMeter + Selenium framework</b> replacing LoadRunner TrueClient — 100% savings on tool licensing.</li>
-            <li><i data-lucide="bot" class="ico"></i>Automated test execution and analysis on Azure ADO with Python, cutting insight-delivery time by <b>50%</b>.</li>
-          </ul>
-        </div>
+    <div class="job reveal">
+      <div class="when">Sept 2023 — Nov 2024</div>
+      <div>
+        <h3>Performance Engineer</h3>
+        <div class="org">Zensoft Services</div>
+        <div class="client"><span>Client:</span><span class="client-chip"><svg class="pwc-logo" viewBox="0 0 100 56" xmlns="http://www.w3.org/2000/svg" aria-label="PwC"><g fill="#EB5C2E"><polygon points="58,18 78,18 74,25 54,25"/><polygon points="63,9 83,9 79,16 59,16"/><polygon points="68,0 88,0 84,7 64,7"/></g><text x="0" y="50" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="46" fill="var(--pwc-ink,#111)" letter-spacing="-2">pwc</text></svg> PwC US</span></div>
+        <ul>
+          <li>Achieved <b>120% response-time improvement</b> and ~0.1% error rate resolving multi-layer WebSocket performance issues.</li>
+          <li>Built a custom <b>JMeter + Selenium framework</b> replacing LoadRunner TrueClient — 100% savings on tool licensing.</li>
+          <li>Automated test execution and analysis on Azure ADO with Python, cutting insight-delivery time by <b>50%</b>.</li>
+        </ul>
       </div>
+    </div>
 
-      <div class="job reveal">
-        <div class="card glass">
-          <div class="when">Aug 2021 — Sept 2023</div>
-          <h3>Performance Engineer</h3>
-          <div class="org"><i data-lucide="building-2" class="ico"></i> NTT Data Services</div>
-          <div class="client"><span class="pre">Client:</span><span class="client-chip"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect width="16" height="16" rx="2" fill="#FF0000"/><text x="8" y="6.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="4" fill="#fff">UNI</text><text x="8" y="11.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="4" fill="#fff">QLO</text></svg> Uniqlo (UQ)</span></div>
-          <ul>
-            <li><i data-lucide="search-code" class="ico"></i>Led an in-house open-source <b>monitoring &amp; auto-analysis tool</b>, reducing a 1-hour task to ~6–7 minutes.</li>
-            <li><i data-lucide="bug" class="ico"></i>Diagnosed memory leaks, packet drops, and microservice issues across AWS and GCP, significantly improving production stability.</li>
-            <li><i data-lucide="database" class="ico"></i>Built precision JMeter load models and implemented database replication for improved reliability.</li>
-            <li><i data-lucide="award" class="ico"></i><b>Star Award</b> (Foresight &amp; Hard Work) and <b>KK Award</b> (Outstanding Performance of the Year).</li>
-          </ul>
-        </div>
+    <div class="job reveal">
+      <div class="when">Aug 2021 — Sept 2023</div>
+      <div>
+        <h3>Performance Engineer</h3>
+        <div class="org">NTT Data Services</div>
+        <div class="client"><span>Client:</span><span class="client-chip"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect width="16" height="16" rx="2" fill="#FF0000"/><text x="8" y="6.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="4" fill="#fff">UNI</text><text x="8" y="11.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="4" fill="#fff">QLO</text></svg> Uniqlo (UQ)</span></div>
+        <ul>
+          <li>Led an in-house open-source <b>monitoring &amp; auto-analysis tool</b>, reducing a 1-hour task to ~6–7 minutes.</li>
+          <li>Diagnosed memory leaks, packet drops, and microservice issues across AWS and GCP, significantly improving production stability.</li>
+          <li>Built precision JMeter load models and implemented database replication for improved reliability.</li>
+          <li><b>Star Award</b> (Foresight &amp; Hard Work) and <b>KK Award</b> (Outstanding Performance of the Year).</li>
+        </ul>
       </div>
+    </div>
 
-      <div class="job reveal">
-        <div class="card glass">
-          <div class="when">Jan 2021 — June 2021</div>
-          <h3>Engineering Intern</h3>
-          <div class="org"><i data-lucide="building-2" class="ico"></i> Softnautics LLP</div>
-          <ul>
-            <li><i data-lucide="rocket" class="ico"></i>Migrated a codebase from Python to C++, achieving a <b>10× improvement</b> in execution speed.</li>
-          </ul>
-        </div>
+    <div class="job reveal">
+      <div class="when">Jan 2021 — June 2021</div>
+      <div>
+        <h3>Engineering Intern</h3>
+        <div class="org">Softnautics LLP</div>
+        <ul>
+          <li>Migrated a codebase from Python to C++, achieving a <b>10× improvement</b> in execution speed.</li>
+        </ul>
       </div>
     </div>
   </section>
 
   <section id="skills">
-    <div class="sec-label reveal">Toolkit</div>
+    <div class="kicker reveal">Toolkit</div>
     <h2 class="reveal">What I work with</h2>
-    <p class="sec-intro reveal">From agentic orchestration to thread-dump forensics — the stack behind the outcomes.</p>
-
-    <div class="skill-grid stagger reveal">
-      <div class="skill-card glass">
-        <div class="cat"><i data-lucide="brain-circuit" class="ico"></i> Generative AI &amp; Agentic Systems</div>
+    <p class="lede reveal">From agentic orchestration to thread-dump forensics — the stack behind the outcomes.</p>
+    <div class="skill-grid reveal">
+      <div class="skill-card">
+        <div class="cat">Generative AI &amp; Agentic Systems</div>
         <div class="tags">
           <span class="tag"><img src="icons/langchain.png" alt="">LangChain</span>
           <span class="tag"><img src="https://unpkg.com/@lobehub/icons-static-svg@1.69.0/icons/langgraph-color.svg" alt="">LangGraph</span>
           <span class="tag"><img src="https://unpkg.com/@lobehub/icons-static-svg@1.69.0/icons/langfuse-color.svg" alt="">Langfuse</span>
-          <span class="tag"><i data-lucide="bot" class="ico"></i>AI Agent Dev</span>
-          <span class="tag"><i data-lucide="radar" class="ico"></i>LLM Observability</span>
-          <span class="tag"><i data-lucide="git-branch" class="ico"></i>E2E Trace Analysis</span>
-          <span class="tag"><i data-lucide="message-square-code" class="ico"></i>Prompt Engineering</span>
+          <span class="tag">AI Agent Dev</span>
+          <span class="tag">LLM Observability</span>
+          <span class="tag">E2E Trace Analysis</span>
+          <span class="tag">Prompt Engineering</span>
         </div>
       </div>
-      <div class="skill-card glass">
-        <div class="cat"><i data-lucide="line-chart" class="ico"></i> Performance &amp; Monitoring</div>
+      <div class="skill-card">
+        <div class="cat">Performance &amp; Monitoring</div>
         <div class="tags">
-          <span class="tag"><i data-lucide="gauge" class="ico"></i>JMeter</span>
-          <span class="tag"><i data-lucide="zap" class="ico"></i>Gatling</span>
+          <span class="tag">JMeter</span>
+          <span class="tag">Gatling</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="">Azure Load Testing</span>
-          <span class="tag"><i data-lucide="activity" class="ico"></i>LoadRunner</span>
+          <span class="tag">LoadRunner</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" alt="">Grafana</span>
           <span class="tag"><img src="https://cdn.simpleicons.org/datadog/632CA6" alt="">Datadog</span>
           <span class="tag"><img src="https://cdn.simpleicons.org/dynatrace/1496FF" alt="">Dynatrace</span>
-          <span class="tag"><svg class="lg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 13.05c0 .3.03.55.09.73.07.18.15.38.27.6.04.06.06.13.06.18 0 .08-.05.16-.15.24l-.5.33a.4.4 0 0 1-.2.07c-.08 0-.16-.04-.23-.11a2.4 2.4 0 0 1-.28-.36 6 6 0 0 1-.24-.46c-.6.71-1.36 1.07-2.27 1.07-.65 0-1.17-.19-1.55-.56-.38-.37-.57-.86-.57-1.48 0-.65.23-1.18.7-1.58.46-.4 1.08-.6 1.87-.6.26 0 .53.02.81.06.28.04.57.1.88.17v-.55c0-.58-.12-.99-.36-1.22-.25-.24-.67-.35-1.27-.35-.27 0-.55.03-.84.1-.29.07-.57.16-.84.27a2.2 2.2 0 0 1-.27.1.5.5 0 0 1-.13.02c-.11 0-.16-.08-.16-.25v-.39c0-.13.02-.22.06-.28a.6.6 0 0 1 .23-.17c.27-.14.6-.26.97-.35.38-.1.78-.14 1.2-.14.92 0 1.59.21 2.02.63.42.41.63 1.05.63 1.9v2.5zm-3.13 1.17c.25 0 .51-.05.78-.14.27-.09.51-.25.71-.47.12-.14.21-.3.25-.48.05-.18.08-.4.08-.65v-.31a6.4 6.4 0 0 0-.7-.13 5.7 5.7 0 0 0-.72-.05c-.51 0-.89.1-1.14.31-.25.2-.37.49-.37.87 0 .35.09.62.28.8.18.18.43.27.55.27zm6.19.83c-.15 0-.25-.02-.31-.08-.07-.05-.12-.16-.17-.3L7.7 8.95a1.3 1.3 0 0 1-.07-.31c0-.12.06-.19.18-.19h.78c.15 0 .26.03.32.08.07.05.11.16.16.3l1.31 5.17 1.22-5.17c.04-.14.08-.25.15-.3.07-.05.18-.08.33-.08h.64c.15 0 .26.03.33.08.07.05.12.16.15.3l1.23 5.23 1.35-5.23c.05-.14.1-.25.16-.3.07-.05.18-.08.32-.08h.74c.12 0 .19.06.19.19 0 .04 0 .08-.02.13a1 1 0 0 1-.05.18l-1.88 6.06c-.05.14-.1.25-.17.3-.07.05-.17.08-.31.08h-.69c-.15 0-.26-.03-.33-.08-.07-.06-.12-.16-.15-.31L13.31 9.9l-1.21 5.04c-.04.15-.08.25-.15.31-.07.05-.18.08-.33.08h-.45zm9.9.22a5 5 0 0 1-1.18-.14c-.39-.09-.69-.19-.89-.31-.12-.07-.21-.15-.24-.22a.56.56 0 0 1-.05-.22v-.41c0-.17.06-.25.18-.25.05 0 .1 0 .14.02l.21.09c.28.12.59.22.91.29.33.06.65.1.98.1.52 0 .92-.09 1.2-.27.28-.18.43-.45.43-.78a.7.7 0 0 0-.2-.51c-.13-.14-.37-.26-.72-.38l-1.04-.32c-.52-.16-.91-.4-1.15-.72-.24-.31-.37-.66-.37-1.04 0-.3.07-.56.2-.79.12-.23.3-.43.51-.59.22-.16.46-.28.75-.36.28-.08.58-.12.89-.12.16 0 .32.01.48.03.16.02.32.05.47.08l.42.11c.13.04.23.08.3.12.1.06.17.12.21.18.04.06.06.14.06.24v.38c0 .17-.06.26-.18.26a.8.8 0 0 1-.3-.1 3.6 3.6 0 0 0-1.51-.3c-.47 0-.84.07-1.09.23-.26.15-.39.39-.39.72 0 .21.08.39.23.53.15.14.42.27.8.4l1.02.32c.51.16.88.39 1.1.68.22.29.33.62.33 1 0 .3-.06.57-.18.81-.13.24-.3.45-.52.62-.22.17-.49.3-.79.39-.32.1-.66.14-1.03.14zM21.7 19.06c-2.62 1.94-6.43 2.97-9.71 2.97-4.6 0-8.74-1.7-11.87-4.53-.25-.22-.03-.53.27-.36 3.39 1.97 7.57 3.16 11.9 3.16 2.91 0 6.11-.6 9.06-1.85.44-.19.81.29.35.61zm.79-.9c-.34-.43-2.22-.2-3.07-.1-.26.03-.3-.19-.06-.36 1.5-1.06 3.96-.75 4.25-.4.29.36-.08 2.82-1.49 4-.21.18-.42.08-.32-.15.32-.78 1.04-2.55.69-2.99z"/></svg>CloudWatch</span>
-          <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="">App Insights</span>
+          <span class="tag">CloudWatch</span>
+          <span class="tag">App Insights</span>
         </div>
       </div>
-      <div class="skill-card glass">
-        <div class="cat"><i data-lucide="cloud" class="ico"></i> Cloud &amp; DevOps</div>
+      <div class="skill-card">
+        <div class="cat">Cloud &amp; DevOps</div>
         <div class="tags">
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="">Azure AKS</span>
-          <span class="tag"><svg class="lg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 13.05c0 .3.03.55.09.73.07.18.15.38.27.6.04.06.06.13.06.18 0 .08-.05.16-.15.24l-.5.33a.4.4 0 0 1-.2.07c-.08 0-.16-.04-.23-.11a2.4 2.4 0 0 1-.28-.36 6 6 0 0 1-.24-.46c-.6.71-1.36 1.07-2.27 1.07-.65 0-1.17-.19-1.55-.56-.38-.37-.57-.86-.57-1.48 0-.65.23-1.18.7-1.58.46-.4 1.08-.6 1.87-.6.26 0 .53.02.81.06.28.04.57.1.88.17v-.55c0-.58-.12-.99-.36-1.22-.25-.24-.67-.35-1.27-.35-.27 0-.55.03-.84.1-.29.07-.57.16-.84.27a2.2 2.2 0 0 1-.27.1.5.5 0 0 1-.13.02c-.11 0-.16-.08-.16-.25v-.39c0-.13.02-.22.06-.28a.6.6 0 0 1 .23-.17c.27-.14.6-.26.97-.35.38-.1.78-.14 1.2-.14.92 0 1.59.21 2.02.63.42.41.63 1.05.63 1.9v2.5zm-3.13 1.17c.25 0 .51-.05.78-.14.27-.09.51-.25.71-.47.12-.14.21-.3.25-.48.05-.18.08-.4.08-.65v-.31a6.4 6.4 0 0 0-.7-.13 5.7 5.7 0 0 0-.72-.05c-.51 0-.89.1-1.14.31-.25.2-.37.49-.37.87 0 .35.09.62.28.8.18.18.43.27.55.27zm6.19.83c-.15 0-.25-.02-.31-.08-.07-.05-.12-.16-.17-.3L7.7 8.95a1.3 1.3 0 0 1-.07-.31c0-.12.06-.19.18-.19h.78c.15 0 .26.03.32.08.07.05.11.16.16.3l1.31 5.17 1.22-5.17c.04-.14.08-.25.15-.3.07-.05.18-.08.33-.08h.64c.15 0 .26.03.33.08.07.05.12.16.15.3l1.23 5.23 1.35-5.23c.05-.14.1-.25.16-.3.07-.05.18-.08.32-.08h.74c.12 0 .19.06.19.19 0 .04 0 .08-.02.13a1 1 0 0 1-.05.18l-1.88 6.06c-.05.14-.1.25-.17.3-.07.05-.17.08-.31.08h-.69c-.15 0-.26-.03-.33-.08-.07-.06-.12-.16-.15-.31L13.31 9.9l-1.21 5.04c-.04.15-.08.25-.15.31-.07.05-.18.08-.33.08h-.45zm9.9.22a5 5 0 0 1-1.18-.14c-.39-.09-.69-.19-.89-.31-.12-.07-.21-.15-.24-.22a.56.56 0 0 1-.05-.22v-.41c0-.17.06-.25.18-.25.05 0 .1 0 .14.02l.21.09c.28.12.59.22.91.29.33.06.65.1.98.1.52 0 .92-.09 1.2-.27.28-.18.43-.45.43-.78a.7.7 0 0 0-.2-.51c-.13-.14-.37-.26-.72-.38l-1.04-.32c-.52-.16-.91-.4-1.15-.72-.24-.31-.37-.66-.37-1.04 0-.3.07-.56.2-.79.12-.23.3-.43.51-.59.22-.16.46-.28.75-.36.28-.08.58-.12.89-.12.16 0 .32.01.48.03.16.02.32.05.47.08l.42.11c.13.04.23.08.3.12.1.06.17.12.21.18.04.06.06.14.06.24v.38c0 .17-.06.26-.18.26a.8.8 0 0 1-.3-.1 3.6 3.6 0 0 0-1.51-.3c-.47 0-.84.07-1.09.23-.26.15-.39.39-.39.72 0 .21.08.39.23.53.15.14.42.27.8.4l1.02.32c.51.16.88.39 1.1.68.22.29.33.62.33 1 0 .3-.06.57-.18.81-.13.24-.3.45-.52.62-.22.17-.49.3-.79.39-.32.1-.66.14-1.03.14zM21.7 19.06c-2.62 1.94-6.43 2.97-9.71 2.97-4.6 0-8.74-1.7-11.87-4.53-.25-.22-.03-.53.27-.36 3.39 1.97 7.57 3.16 11.9 3.16 2.91 0 6.11-.6 9.06-1.85.44-.19.81.29.35.61zm.79-.9c-.34-.43-2.22-.2-3.07-.1-.26.03-.3-.19-.06-.36 1.5-1.06 3.96-.75 4.25-.4.29.36-.08 2.82-1.49 4-.21.18-.42.08-.32-.15.32-.78 1.04-2.55.69-2.99z"/></svg>AWS ECS</span>
+          <span class="tag">AWS ECS</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="">GCP</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" alt="">Jenkins</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azuredevops/azuredevops-original.svg" alt="">Azure ADO</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="">Docker</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="">Git / GitHub</span>
-          <span class="tag"><i data-lucide="boxes" class="ico"></i>Microservices</span>
+          <span class="tag">Microservices</span>
         </div>
       </div>
-      <div class="skill-card glass">
-        <div class="cat"><i data-lucide="terminal" class="ico"></i> Programming &amp; Analysis</div>
+      <div class="skill-card">
+        <div class="cat">Programming &amp; Analysis</div>
         <div class="tags">
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="">Python</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="">JavaScript</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="">React</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="">Django</span>
           <span class="tag"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="">C++</span>
-          <span class="tag"><i data-lucide="binary" class="ico"></i>Thread / Heap Dump</span>
-          <span class="tag"><i data-lucide="database" class="ico"></i>AWR</span>
-          <span class="tag"><i data-lucide="pie-chart" class="ico"></i>LLM Token Profiling</span>
+          <span class="tag">Thread / Heap Dump</span>
+          <span class="tag">AWR</span>
+          <span class="tag">LLM Token Profiling</span>
         </div>
       </div>
     </div>
   </section>
 
   <section id="writing">
-    <div class="sec-label reveal">Writing</div>
+    <div class="kicker reveal">Writing</div>
     <h2 class="reveal">Notes from the edge</h2>
-    <p class="sec-intro reveal">Thinking out loud on AI systems, context, and making agents useful in the real world.</p>
-    <div class="blog-list stagger reveal">
-      <a class="blog-card glass" href="blog/messy-playground.html">
-        <div class="bmeta"><span>Aug 8, 2026</span><span class="dot"></span><span>7 min read</span><span class="dot"></span><span>AI Systems · Architecture</span></div>
-        <h3>Why AI systems pass the demo and die in production</h3>
-        <p>Most AI products don't fail because the model is weak. They fail because the architecture assumed a clean world — complete docs, linked alerts, tidy ownership — that never existed outside the slide deck.</p>
-        <span class="bread">Read essay <i data-lucide="arrow-right" class="ico"></i></span>
-      </a>
-      <a class="blog-card glass" href="blog/context-builder.html">
-        <div class="bmeta"><span>Aug 6, 2026</span><span class="dot"></span><span>6 min read</span><span class="dot"></span><span>AI Agents · MCP</span></div>
-        <h3>Context Builder: why coding agents fail on large repos — and what to build instead</h3>
-        <p>Agents don't need another chat window. They need a budgeted, task-shaped context pack — Map, Facts, Evidence — assembled ahead of the session so they stop rediscovering the monorepo every time.</p>
-        <span class="bread">Read essay <i data-lucide="arrow-right" class="ico"></i></span>
-      </a>
-    </div>
+    <p class="lede reveal">Thinking out loud on AI systems, context, and making agents useful in the real world.</p>
+    <a class="blog-card reveal" href="blog/messy-playground.html" data-cursor="Read">
+      <div class="bmeta"><span>Aug 8, 2026</span><span>·</span><span>7 min read</span><span>·</span><span>AI Systems · Architecture</span></div>
+      <h3>Why AI systems pass the demo and die in production</h3>
+      <p>Most AI products don't fail because the model is weak. They fail because the architecture assumed a clean world — complete docs, linked alerts, tidy ownership — that never existed outside the slide deck.</p>
+      <span class="bread">Read essay</span>
+    </a>
+    <a class="blog-card reveal" href="blog/context-builder.html" data-cursor="Read">
+      <div class="bmeta"><span>Aug 6, 2026</span><span>·</span><span>6 min read</span><span>·</span><span>AI Agents · MCP</span></div>
+      <h3>Context Builder: why coding agents fail on large repos — and what to build instead</h3>
+      <p>Agents don't need another chat window. They need a budgeted, task-shaped context pack — Map, Facts, Evidence — assembled ahead of the session so they stop rediscovering the monorepo every time.</p>
+      <span class="bread">Read essay</span>
+    </a>
   </section>
 
   <section id="education">
-    <div class="sec-label reveal">Foundations</div>
+    <div class="kicker reveal">Foundations</div>
     <h2 class="reveal">Education &amp; recognition</h2>
-    <div class="edu-grid stagger reveal">
-      <div class="edu-card glass">
-        <div class="eh"><i data-lucide="graduation-cap" class="ico"></i> DEGREE</div>
+    <div class="edu-grid reveal">
+      <div class="edu-card">
+        <div class="kicker">Degree</div>
         <h3>B.Tech, Computer Science (AI/ML)</h3>
         <div class="sub">MIT ADT University, Pune</div>
         <div class="meta">CGPA 8.32/10 · Distinction · Aug 2017 — July 2021</div>
         <div class="award">
-          <span class="row"><i data-lucide="trophy" class="ico"></i><span><b>Star Award</b> — Foresight &amp; Hard Work · NTT Data</span></span>
-          <span class="row"><i data-lucide="trophy" class="ico"></i><span><b>KK Award</b> — Outstanding Performance of the Year · NTT Data</span></span>
+          <span><b>Star Award</b> — Foresight &amp; Hard Work · NTT Data</span>
+          <span><b>KK Award</b> — Outstanding Performance of the Year · NTT Data</span>
         </div>
       </div>
-      <div class="edu-card glass">
-        <div class="eh"><i data-lucide="scroll-text" class="ico"></i> CERTIFICATIONS</div>
-        <div class="cert-list">
-          <div class="cert"><span class="yr">2024</span><span>Site Reliability Engineering — Google / Coursera</span></div>
-          <div class="cert"><span class="yr">2019</span><span>Data Science Orientation — IBM / Coursera</span></div>
-        </div>
+      <div class="edu-card">
+        <div class="kicker">Certifications</div>
+        <div class="cert"><span class="yr">2024</span><span>Site Reliability Engineering — Google / Coursera</span></div>
+        <div class="cert"><span class="yr">2019</span><span>Data Science Orientation — IBM / Coursera</span></div>
       </div>
     </div>
   </section>
 
   <section class="contact" id="contact">
-    <div class="sec-label reveal" style="justify-content:center">Contact</div>
-    <h2 class="reveal">Let's build something <span class="grad">observable.</span></h2>
-    <p class="reveal">Open to roles and collaborations in AI platform engineering, LLM observability, and performance. The fastest way to reach me is below.</p>
+    <div class="kicker reveal">Contact</div>
+    <h2 class="reveal">Let's build something observable.</h2>
+    <p class="lede reveal">Open to roles and collaborations in AI platform engineering, LLM observability, and performance. The fastest way to reach me is below.</p>
     <div class="links reveal">
-      <a class="btn primary" href="mailto:shubhamp2017@gmail.com"><i data-lucide="mail" class="ico"></i> shubhamp2017@gmail.com</a>
-      <button type="button" class="btn ghost" data-resume-preview><i data-lucide="file-text" class="ico"></i> Preview resume</button>
-      <a class="btn ghost" href="Shubham_Pagare_Resume.pdf" download="Shubham_Pagare_Resume.pdf"><i data-lucide="file-down" class="ico"></i> Download</a>
-      <a class="btn ghost" href="tel:+917028119806"><i data-lucide="phone" class="ico"></i> +91 70281 19806</a>
-      <a class="btn ghost" href="https://linkedin.com/in/shubhampagare/" target="_blank" rel="noopener"><svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg> LinkedIn</a>
-      <a class="btn ghost" href="https://github.com/sudoShubham" target="_blank" rel="noopener"><svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.32.47-2.39 1.24-3.23-.12-.31-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.05.14 3 .4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.18.77.84 1.24 1.91 1.24 3.23 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.21.7.83.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg> GitHub</a>
+      <a class="btn primary" href="mailto:shubhamp2017@gmail.com" data-cursor="Mail"><i data-lucide="mail" class="ico"></i> shubhamp2017@gmail.com</a>
+      <button type="button" class="btn" data-resume-preview data-cursor="Resume"><i data-lucide="file-text" class="ico"></i> Preview resume</button>
+      <a class="btn" href="Shubham_Pagare_Resume.pdf" download="Shubham_Pagare_Resume.pdf" data-cursor="Save"><i data-lucide="file-down" class="ico"></i> Download</a>
+      <a class="btn" href="tel:+917028119806" data-cursor="Call"><i data-lucide="phone" class="ico"></i> +91 70281 19806</a>
+      <a class="btn" href="https://linkedin.com/in/shubhampagare/" target="_blank" rel="noopener" data-cursor="LinkedIn"><svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg> LinkedIn</a>
+      <a class="btn" href="https://github.com/sudoShubham" target="_blank" rel="noopener" data-cursor="GitHub"><svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.32.47-2.39 1.24-3.23-.12-.31-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.05.14 3 .4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.18.77.84 1.24 1.91 1.24 3.23 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.21.7.83.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg> GitHub</a>
     </div>
   </section>
+  </div>
 </div>
 
 <footer>
-  <div class="wrap">
-    <div class="foot-inner">
-      <span>© 2026 Shubham Pagare</span>
-      <span>Pune, India</span>
-    </div>
-  </div>
+  <span>© 2026 Shubham Pagare</span>
+  <span>Pune, India</span>
 </footer>
 
 <div class="modal" id="resumeModal" role="dialog" aria-modal="true" aria-labelledby="resumeModalTitle" hidden>
@@ -658,9 +469,9 @@
     <div class="modal-bar">
       <h3 id="resumeModalTitle">Resume</h3>
       <div class="modal-actions">
-        <a class="btn ghost" href="Shubham_Pagare_Resume.pdf" download="Shubham_Pagare_Resume.pdf"><i data-lucide="file-down" class="ico"></i> Download</a>
-        <a class="btn ghost" href="Shubham_Pagare_Resume.pdf" target="_blank" rel="noopener"><i data-lucide="external-link" class="ico"></i> Open</a>
-        <button type="button" class="btn ghost" id="resumeModalClose" aria-label="Close preview"><i data-lucide="x" class="ico"></i></button>
+        <a class="btn" href="Shubham_Pagare_Resume.pdf" download="Shubham_Pagare_Resume.pdf">Download</a>
+        <a class="btn" href="Shubham_Pagare_Resume.pdf" target="_blank" rel="noopener">Open</a>
+        <button type="button" class="btn" id="resumeModalClose" aria-label="Close preview"><i data-lucide="x" class="ico"></i></button>
       </div>
     </div>
     <div class="modal-frame">
@@ -675,7 +486,6 @@
 <script>
   lucide.createIcons();
 
-  /* ============ RESUME PREVIEW ============ */
   const resumeModal=document.getElementById('resumeModal');
   const resumeFrame=document.getElementById('resumeFrame');
   const resumeClose=document.getElementById('resumeModalClose');
@@ -685,10 +495,7 @@
     resumeModal.hidden=false;
     requestAnimationFrame(()=>resumeModal.classList.add('open'));
     document.body.classList.add('modal-open');
-    if(!resumeLoaded){
-      resumeFrame.src=RESUME_SRC+'#view=FitH';
-      resumeLoaded=true;
-    }
+    if(!resumeLoaded){resumeFrame.src=RESUME_SRC+'#view=FitH';resumeLoaded=true;}
     resumeClose.focus();
   }
   function closeResume(){
@@ -701,160 +508,23 @@
   resumeModal.addEventListener('click',e=>{if(e.target===resumeModal)closeResume();});
   addEventListener('keydown',e=>{if(e.key==='Escape'&&resumeModal.classList.contains('open'))closeResume();});
 
-  /* ============ THEME ============ */
-  const root=document.documentElement;
-  const themeBtn=document.getElementById('themeBtn');
-  function cssVar(n){return getComputedStyle(root).getPropertyValue(n).trim();}
-  function setTheme(t){
-    root.setAttribute('data-theme',t);
-    document.getElementById('themeIcon').setAttribute('data-lucide',t==='dark'?'moon':'sun');
-    lucide.createIcons();
-    if(window.__scene)window.__scene.refreshColors();
-  }
-  themeBtn.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
-
-  /* ============ NAV + REVEAL ============ */
-  const nav=document.getElementById('nav');
   const navLinks=document.getElementById('navLinks');
   const menuBtn=document.getElementById('menuBtn');
   function setMenu(open){
     navLinks.classList.toggle('open',open);
+    document.body.classList.toggle('menu-open',open);
     menuBtn.setAttribute('aria-expanded',open?'true':'false');
-    menuBtn.setAttribute('aria-label',open?'Close menu':'Open menu');
     document.getElementById('menuIcon').setAttribute('data-lucide',open?'x':'menu');
     lucide.createIcons();
   }
   menuBtn.addEventListener('click',()=>setMenu(!navLinks.classList.contains('open')));
   navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
   addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false);});
-  addEventListener('scroll',()=>{
-    nav.classList.toggle('scrolled',scrollY>20);
-    if(navLinks.classList.contains('open')&&scrollY>40)setMenu(false);
-  });
-  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.14,rootMargin:'0px 0px -40px 0px'});
+
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ============ CINEMATIC 3D HERO — agent network ============ */
-  (function(){
-    if(reduced || !window.THREE) return;
-    const isMobile=matchMedia('(max-width:760px)').matches || innerWidth<760;
-    const lowPower=isMobile || (navigator.hardwareConcurrency && navigator.hardwareConcurrency<=4);
-    const canvas=document.getElementById('scene');
-    const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:!lowPower,powerPreference:'low-power'});
-    renderer.setPixelRatio(Math.min(devicePixelRatio, lowPower?1:2));
-    const scene=new THREE.Scene();
-    const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,100);
-    camera.position.z=18;
-
-    function hex(v){return new THREE.Color(v);}
-    let nodeColor=hex(cssVar('--c-node')||'#5eead4');
-
-    // build a cloud of agent nodes — fewer on low-power devices
-    const N=lowPower?20:46;
-    const sphereSeg=lowPower?8:16;
-    const nodes=[];
-    const sphereGeo=new THREE.SphereGeometry(0.16,sphereSeg,sphereSeg);
-    const group=new THREE.Group();
-    scene.add(group);
-    for(let i=0;i<N;i++){
-      const mat=new THREE.MeshBasicMaterial({color:nodeColor,transparent:true,opacity:0.55});
-      const m=new THREE.Mesh(sphereGeo,mat);
-      const r=7+Math.random()*7;
-      const theta=Math.random()*Math.PI*2, phi=Math.acos(2*Math.random()-1);
-      m.position.set(r*Math.sin(phi)*Math.cos(theta), r*Math.sin(phi)*Math.sin(theta)*0.6, r*Math.cos(phi));
-      m.userData={base:m.position.clone(),sp:0.3+Math.random()*0.7,ph:Math.random()*Math.PI*2,mat};
-      group.add(m); nodes.push(m);
-    }
-
-    // connect near neighbours with lines
-    const linePos=[]; const pairs=[];
-    for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
-      if(nodes[i].position.distanceTo(nodes[j].position)<5.2){pairs.push([i,j]);}
-    }
-    pairs.forEach(()=>{linePos.push(0,0,0,0,0,0);});
-    const lineGeo=new THREE.BufferGeometry();
-    lineGeo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(linePos),3));
-    let lineMat=new THREE.LineBasicMaterial({color:nodeColor,transparent:true,opacity:0.07});
-    const lines=new THREE.LineSegments(lineGeo,lineMat);
-    group.add(lines);
-
-    // travelling signal pulses along edges
-    const PULSES=lowPower?6:14;
-    const pulses=[];
-    const pulseGeo=new THREE.SphereGeometry(0.09,lowPower?6:10,lowPower?6:10);
-    for(let i=0;i<PULSES;i++){
-      const mat=new THREE.MeshBasicMaterial({color:nodeColor,transparent:true,opacity:0.7});
-      const p=new THREE.Mesh(pulseGeo,mat);
-      p.userData={edge:Math.floor(Math.random()*pairs.length),t:Math.random(),sp:0.004+Math.random()*0.01,mat};
-      group.add(p); pulses.push(p);
-    }
-
-    let mx=0,my=0,tmx=0,tmy=0;
-    addEventListener('mousemove',e=>{tmx=(e.clientX/innerWidth-0.5);tmy=(e.clientY/innerHeight-0.5);});
-    addEventListener('resize',resize);
-    function resize(){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}
-    resize();
-
-    let scrollY2=0;
-    addEventListener('scroll',()=>{scrollY2=scrollY;});
-
-    const clock=new THREE.Clock();
-    let lastT=0; const frameMin=lowPower?1/30:0;
-    function animate(){
-      requestAnimationFrame(animate);
-      if(document.hidden) return;                 // pause only when tab not visible
-      const now=clock.getElapsedTime();
-      if(frameMin && now-lastT<frameMin) return;  // cap fps on low-power
-      lastT=now;
-      const t=now;
-      mx+=(tmx-mx)*0.05; my+=(tmy-my)*0.05;
-
-      // gentle drift of nodes
-      nodes.forEach(m=>{
-        const u=m.userData;
-        m.position.x=u.base.x+Math.sin(t*u.sp+u.ph)*0.5;
-        m.position.y=u.base.y+Math.cos(t*u.sp*0.8+u.ph)*0.5;
-        u.mat.opacity=0.30+0.22*Math.sin(t*1.5+u.ph);
-      });
-      // update edge lines
-      const arr=lineGeo.attributes.position.array;
-      pairs.forEach((pr,k)=>{
-        const a=nodes[pr[0]].position,b=nodes[pr[1]].position;
-        arr[k*6]=a.x;arr[k*6+1]=a.y;arr[k*6+2]=a.z;
-        arr[k*6+3]=b.x;arr[k*6+4]=b.y;arr[k*6+5]=b.z;
-      });
-      lineGeo.attributes.position.needsUpdate=true;
-      // move pulses along edges
-      pulses.forEach(p=>{
-        const u=p.userData; u.t+=u.sp;
-        if(u.t>=1){u.t=0;u.edge=Math.floor(Math.random()*pairs.length);}
-        const pr=pairs[u.edge]; if(!pr)return;
-        const a=nodes[pr[0]].position,b=nodes[pr[1]].position;
-        p.position.lerpVectors(a,b,u.t);
-        u.mat.opacity=0.6*Math.sin(u.t*Math.PI);
-      });
-
-      // cinematic camera: parallax + slow orbit + scroll dolly
-      group.rotation.y=t*0.04+mx*0.6;
-      group.rotation.x=my*0.4;
-      camera.position.z=18 - Math.min(scrollY2*0.004,6);
-      camera.position.x=mx*2.5;
-      camera.position.y=-my*2.0 + Math.min(scrollY2*0.002,3);
-      camera.lookAt(0,0,0);
-
-      renderer.render(scene,camera);
-    }
-    animate();
-
-    window.__scene={refreshColors(){
-      nodeColor=hex(cssVar('--c-node')||'#5eead4');
-      nodes.forEach(m=>m.userData.mat.color=nodeColor.clone());
-      pulses.forEach(p=>p.userData.mat.color=nodeColor.clone());
-      lineMat.color=nodeColor.clone();
-    }};
-  })();
 </script>
 </body>
 </html>
