@@ -108,7 +108,7 @@
   .wrap{max-width:1080px;margin:0 auto}
   section{padding:88px 0;border-top:1px solid var(--line);scroll-margin-top:calc(72px + env(safe-area-inset-top))}
   .stage picture{position:absolute;inset:0;z-index:0}
-  .jobs-more{display:none}
+  .btn.jobs-more{display:none}
   .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
   h2{font-family:var(--title);font-weight:500;font-size:clamp(32px,5vw,64px);letter-spacing:-.03em;line-height:1.02;margin-bottom:18px;font-optical-sizing:none}
   .lede{max-width:62ch;font-size:18px;color:var(--ink-dim);margin-bottom:36px}
@@ -127,6 +127,7 @@
 
   .job{display:grid;grid-template-columns:160px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--line)}
   .job:first-of-type{border-top:1px solid var(--line)}
+  .job:last-of-type{border-bottom:none}
   .when{font-size:13px;color:var(--ink-faint);padding-top:6px}
   .job h3{font-family:var(--title);font-size:26px;font-weight:500;letter-spacing:-.02em}
   .org{margin:4px 0 10px;font-size:15px;color:var(--ink-faint)}
@@ -224,7 +225,7 @@
     .job li{font-size:14.5px}
     .job.job-more{display:none}
     #work.expanded .job.job-more{display:grid}
-    .jobs-more{display:inline-flex;margin-top:18px}
+    .btn.jobs-more{display:inline-flex;margin-top:18px}
     .blog-card{padding:22px 0}
     .blog-card h3{font-size:22px;line-height:1.2;letter-spacing:-.03em;font-variation-settings:"opsz" 48}
     .blog-card p{font-size:15px}
@@ -275,8 +276,8 @@
   <div class="wrap">
   <section id="about">
     <div class="kicker reveal">About</div>
-    <h2 class="reveal">Engineer, translator, builder</h2>
-    <p class="about-copy reveal">I sit where business goals meet technical reality, and make sure both win. I turn ideas into shipped, scalable systems, living in the gap between <b>stakeholders and development</b>: clarifying what's needed, surfacing tradeoffs early, and making complicated things feel simple.</p>
+    <h2 class="reveal">Engineer first, fluent in the business</h2>
+    <p class="about-copy reveal">I'm an engineer. I build AI platforms, make systems faster and more reliable, and get that work into production. I also understand the business problem, so what ships is aimed at an outcome, not just a technical win.</p>
     <div class="points reveal">
       <span>Business context, not just the code</span>
       <span>Ideas → shipped reality</span>
