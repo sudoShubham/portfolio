@@ -110,7 +110,7 @@
   .stage picture{position:absolute;inset:0;z-index:0}
   .jobs-more{display:none}
   .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
-  h2{font-family:var(--title);font-weight:500;font-size:clamp(32px,5vw,64px);letter-spacing:-.03em;line-height:1.02;margin-bottom:18px}
+  h2{font-family:var(--title);font-weight:500;font-size:clamp(32px,5vw,64px);letter-spacing:-.03em;line-height:1.02;margin-bottom:18px;font-optical-sizing:none}
   .lede{max-width:62ch;font-size:18px;color:var(--ink-dim);margin-bottom:36px}
 
   .about-copy{font-size:clamp(20px,2.4vw,28px);line-height:1.35;max-width:38em;font-family:var(--title);font-weight:400}
@@ -226,7 +226,8 @@
     #work.expanded .job.job-more{display:grid}
     .jobs-more{display:inline-flex;margin-top:18px}
     .blog-card{padding:22px 0}
-    .blog-card h3{font-size:20px;line-height:1.25}
+    .blog-card h3{font-size:22px;line-height:1.2;letter-spacing:-.03em;font-variation-settings:"opsz" 48}
+    .blog-card p{font-size:15px}
     .edu-card h3{font-size:20px}
     footer{padding:16px max(18px,env(safe-area-inset-left)) max(28px,env(safe-area-inset-bottom));flex-direction:column;gap:6px;text-align:center}
     .about-copy{font-size:18px}
