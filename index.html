@@ -197,14 +197,15 @@
   }
   @media(max-width:760px){
     .stage,.page{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
-    .stage{padding:0;min-height:100svh;display:block}
+    .stage{padding:0;min-height:0;height:48svh;display:block}
     .stage-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:82% 45%}
-    .stage::after{display:block;background:linear-gradient(180deg,transparent 38%,rgba(247,247,247,.55) 68%,var(--bg) 100%)}
-    .stage-copy{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 max(18px,env(safe-area-inset-left)) max(28px,env(safe-area-inset-bottom));
+    .stage::after{display:block;background:linear-gradient(180deg,transparent 28%,rgba(247,247,247,.45) 62%,var(--bg) 100%)}
+    .stage-copy{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 max(18px,env(safe-area-inset-left)) 18px;
       background:none;border:none;border-radius:0;backdrop-filter:none;-webkit-backdrop-filter:none}
     .stage h1{white-space:normal;font-size:clamp(32px,10vw,42px);line-height:1.08;letter-spacing:-.03em;margin:0}
     .role{font-size:15px;margin:8px 0 0;max-width:none}
     section{padding:48px 0}
+    #about{padding-top:12px;border-top:none}
     h2{font-size:clamp(26px,8vw,34px)}
     .lede{font-size:16px;margin-bottom:24px}
     .kicker{font-size:12px;letter-spacing:.1em}
