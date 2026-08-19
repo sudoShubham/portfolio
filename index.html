@@ -95,16 +95,16 @@
     body.menu-open{overflow:hidden}
   }
 
-  .stage{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 32px 110px;
-    position:relative;z-index:3;overflow:hidden}
+  .stage{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+    padding:calc(72px + env(safe-area-inset-top)) 32px 72px;position:relative;z-index:3;overflow:hidden}
   .stage-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
     z-index:0;pointer-events:none}
   .stage::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:linear-gradient(180deg,rgba(247,247,247,.18) 0%,rgba(247,247,247,.08) 42%,var(--bg) 100%)}
-  .stage h1,.stage .role,.stage-copy{position:relative;z-index:3}
+    background:linear-gradient(180deg,rgba(247,247,247,.32) 0%,rgba(247,247,247,.5) 48%,rgba(247,247,247,.28) 72%,var(--bg) 100%)}
+  .stage h1,.stage .tagline,.stage-copy{position:relative;z-index:3}
   .stage h1{font-family:var(--title);font-weight:500;font-size:clamp(36px,7.2vw,96px);line-height:.92;
     letter-spacing:-.04em;white-space:nowrap;opacity:0;animation:rise 1s .25s forwards}
-  .role{margin-top:18px;font-size:clamp(16px,1.7vw,22px);max-width:28ch;color:var(--ink-dim);
+  .tagline{margin-top:18px;max-width:36ch;font-size:clamp(16px,1.7vw,22px);line-height:1.35;color:var(--ink-dim);
     opacity:0;animation:rise 1s .45s forwards}
   @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 
@@ -117,12 +117,13 @@
   h2{font-family:var(--title);font-weight:500;font-size:clamp(32px,5vw,64px);letter-spacing:-.03em;line-height:1.02;margin-bottom:18px;font-optical-sizing:none}
   .lede{max-width:62ch;font-size:18px;color:var(--ink-dim);margin-bottom:36px}
 
+  .hl{color:var(--signal);font-weight:600}
   .about-copy{font-size:clamp(20px,2.4vw,28px);line-height:1.35;max-width:38em;font-family:var(--title);font-weight:400}
   .about-copy b{font-weight:600}
   .points{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:18px 40px;max-width:720px}
   .points span{display:block;padding-top:12px;border-top:1px solid var(--line);font-size:15px;color:var(--ink-dim)}
   .metrics{margin-top:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-  .metric .num{font-family:var(--title);font-size:clamp(28px,3.4vw,42px);letter-spacing:-.03em;line-height:1}
+  .metric .num{font-family:var(--title);font-size:clamp(28px,3.4vw,42px);letter-spacing:-.03em;line-height:1;color:var(--signal)}
   .metric .lab{margin-top:8px;font-size:13px;color:var(--ink-dim);max-width:18ch}
 
   .traits{display:grid;grid-template-columns:1fr 1fr;gap:28px 48px}
@@ -136,9 +137,9 @@
   .job h3{font-family:var(--title);font-size:26px;font-weight:500;letter-spacing:-.02em}
   .org{margin:4px 0 10px;font-size:15px;color:var(--ink-faint)}
   .client{font-size:13px;color:var(--ink-faint);margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .client-chip{display:inline-flex;align-items:center;gap:7px}
-  .client-chip svg{height:13px;width:auto}
-  .client-chip .pwc-logo{height:15px}
+  .client-chip{display:inline-flex;align-items:center;gap:7px;line-height:1}
+  .client-chip svg{height:13px;width:auto;display:block;flex:none}
+  .client-chip .pwc-logo{height:15px;transform:translateY(-2px)}
   .job ul{list-style:none;display:flex;flex-direction:column;gap:8px}
   .job li{color:var(--ink-dim);font-size:15.5px;padding-left:14px;position:relative}
   .job li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--signal)}
@@ -201,13 +202,14 @@
   }
   @media(max-width:760px){
     .stage,.page{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
-    .stage{padding:0;min-height:0;height:48svh;display:block}
+    .stage{padding:calc(52px + env(safe-area-inset-top)) max(18px,env(safe-area-inset-left)) 24px max(18px,env(safe-area-inset-right));
+      min-height:0;height:48svh;display:flex;flex-direction:column;justify-content:center}
     .stage-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:82% 45%}
-    .stage::after{display:block;background:linear-gradient(180deg,transparent 28%,rgba(247,247,247,.45) 62%,var(--bg) 100%)}
-    .stage-copy{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 max(18px,env(safe-area-inset-left)) 18px;
+    .stage::after{display:block;background:linear-gradient(180deg,rgba(247,247,247,.28) 0%,rgba(247,247,247,.55) 52%,var(--bg) 100%)}
+    .stage-copy{position:relative;left:auto;right:auto;bottom:auto;z-index:3;padding:0;
       background:none;border:none;border-radius:0;backdrop-filter:none;-webkit-backdrop-filter:none}
     .stage h1{white-space:normal;font-size:clamp(36px,11vw,46px);line-height:1.08;letter-spacing:-.03em;margin:0}
-    .role{font-size:15px;margin:8px 0 0;max-width:none}
+    .tagline{font-size:15px;margin-top:8px;max-width:none}
     section{padding:48px 0}
     #about{padding-top:12px;border-top:none}
     h2{font-size:clamp(26px,8vw,34px)}
@@ -273,7 +275,7 @@
   </picture>
   <div class="stage-copy">
     <h1>Shubham Pagare</h1>
-    <p class="role">AI platform &amp; performance engineer</p>
+    <p class="tagline">I turn complex AI systems into <span class="hl">outcomes</span> that hold in production.</p>
   </div>
 </section>
 
@@ -281,8 +283,8 @@
   <div class="wrap">
   <section id="about">
     <div class="kicker reveal">About</div>
-    <h2 class="reveal">Engineer first, fluent in the business</h2>
-    <p class="about-copy reveal">I'm an engineer. I build AI platforms, make systems faster and more reliable, and get that work into production. I also understand the business problem, so what ships is aimed at an outcome, not just a technical win.</p>
+    <h2 class="reveal">Engineer first, fluent in the <span class="hl">business</span></h2>
+    <p class="about-copy reveal">I'm an engineer. I build AI platforms, make systems faster and more reliable, and get that work into production. I also understand the business problem, so what ships is aimed at an <span class="hl">outcome</span>, not just a technical win.</p>
     <div class="points reveal">
       <span>Business context, not just the code</span>
       <span>Ideas → shipped reality</span>
@@ -299,7 +301,7 @@
 
   <section id="impact">
     <div class="kicker reveal">How I work</div>
-    <h2 class="reveal">The way I think</h2>
+    <h2 class="reveal">The way I <span class="hl">think</span></h2>
     <p class="lede reveal">The instincts behind the tools — how I approach systems, diagnostics, and hard problems.</p>
     <div class="traits reveal">
       <div class="trait"><h3>Architect Mindset</h3><p>See the whole system before the parts — design for scale, trace the data, anticipate where it breaks.</p></div>
@@ -311,7 +313,7 @@
 
   <section id="work">
     <div class="kicker reveal">Experience</div>
-    <h2 class="reveal">Where I've shipped</h2>
+    <h2 class="reveal">Where I've <span class="hl">shipped</span></h2>
     <p class="lede reveal">A run through the roles, the clients, and the measurable outcomes — from AI agent platforms to deep performance forensics.</p>
 
     <div class="job reveal">
@@ -323,7 +325,7 @@
         <ul>
           <li>Designed and deployed <b>multi-agent AI workflows</b> with LangChain, LangGraph, and Azure OpenAI to automate QA and business processes.</li>
           <li>Built a custom <b>E2E trace tracking tool</b> with Langfuse for deep LLM pipeline visibility — surfacing latency hotspots, token inefficiencies, and failure points.</li>
-          <li>Led AI performance engineering across LLM analysis, load-testing strategy, and Azure optimization, driving <b>measurable cost reduction</b>.</li>
+          <li>Led AI performance engineering across LLM analysis, load-testing strategy, and Azure optimization, driving <b class="hl">measurable cost reduction</b>.</li>
           <li>Identified critical architectural bottlenecks and shaped design decisions in direct review with PwC US stakeholders.</li>
         </ul>
       </div>
@@ -336,9 +338,9 @@
         <div class="org">Zensoft Services</div>
         <div class="client"><span>Client:</span><span class="client-chip"><svg class="pwc-logo" viewBox="0 0 100 56" xmlns="http://www.w3.org/2000/svg" aria-label="PwC"><g fill="#EB5C2E"><polygon points="58,18 78,18 74,25 54,25"/><polygon points="63,9 83,9 79,16 59,16"/><polygon points="68,0 88,0 84,7 64,7"/></g><text x="0" y="50" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="46" fill="var(--pwc-ink,#111)" letter-spacing="-2">pwc</text></svg> PwC US</span></div>
         <ul>
-          <li>Achieved <b>120% response-time improvement</b> and ~0.1% error rate resolving multi-layer WebSocket performance issues.</li>
+          <li>Achieved <b class="hl">120% response-time improvement</b> and ~0.1% error rate resolving multi-layer WebSocket performance issues.</li>
           <li>Built a custom <b>JMeter + Selenium framework</b> replacing LoadRunner TrueClient — 100% savings on tool licensing.</li>
-          <li>Automated test execution and analysis on Azure ADO with Python, cutting insight-delivery time by <b>50%</b>.</li>
+          <li>Automated test execution and analysis on Azure ADO with Python, cutting insight-delivery time by <b class="hl">50%</b>.</li>
         </ul>
       </div>
     </div>
@@ -350,7 +352,7 @@
         <div class="org">NTT Data Services</div>
         <div class="client"><span>Client:</span><span class="client-chip"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect width="16" height="16" rx="2" fill="#FF0000"/><text x="8" y="6.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="4" fill="#fff">UNI</text><text x="8" y="11.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="4" fill="#fff">QLO</text></svg> Uniqlo (UQ)</span></div>
         <ul>
-          <li>Led an in-house open-source <b>monitoring &amp; auto-analysis tool</b>, reducing a 1-hour task to ~6–7 minutes.</li>
+          <li>Led an in-house open-source <b>monitoring &amp; auto-analysis tool</b>, reducing a 1-hour task to <span class="hl">~6–7 minutes</span>.</li>
           <li>Diagnosed memory leaks, packet drops, and microservice issues across AWS and GCP, significantly improving production stability.</li>
           <li>Built precision JMeter load models and implemented database replication for improved reliability.</li>
           <li><b>Star Award</b> (Foresight &amp; Hard Work) and <b>KK Award</b> (Outstanding Performance of the Year).</li>
@@ -364,7 +366,7 @@
         <h3>Engineering Intern</h3>
         <div class="org">Softnautics LLP</div>
         <ul>
-          <li>Migrated a codebase from Python to C++, achieving a <b>10× improvement</b> in execution speed.</li>
+          <li>Migrated a codebase from Python to C++, achieving a <b class="hl">10× improvement</b> in execution speed.</li>
         </ul>
       </div>
     </div>
@@ -433,7 +435,7 @@
 
   <section id="writing">
     <div class="kicker reveal">Writing</div>
-    <h2 class="reveal">Notes from the edge</h2>
+    <h2 class="reveal">Notes from the <span class="hl">edge</span></h2>
     <p class="lede reveal">Thinking out loud on AI systems, context, and making agents useful in the real world.</p>
     <a class="blog-card reveal" href="blog/messy-playground.html" data-cursor="Read">
       <div class="bmeta"><span>Aug 8, 2026</span><span>·</span><span>7 min read</span><span>·</span><span>AI Systems · Architecture</span></div>
@@ -451,7 +453,7 @@
 
   <section id="education">
     <div class="kicker reveal">Foundations</div>
-    <h2 class="reveal">Education &amp; recognition</h2>
+    <h2 class="reveal">Education &amp; <span class="hl">recognition</span></h2>
     <div class="edu-grid reveal">
       <div class="edu-card">
         <div class="kicker">Degree</div>
@@ -473,7 +475,7 @@
 
   <section class="contact" id="contact">
     <div class="kicker reveal">Contact</div>
-    <h2 class="reveal">Let's build something observable.</h2>
+    <h2 class="reveal">Let's build something <span class="hl">observable</span>.</h2>
     <p class="lede reveal">Open to roles and collaborations in AI platform engineering, LLM observability, and performance. The fastest way to reach me is below.</p>
     <div class="links reveal">
       <a class="btn primary" href="mailto:shubhamp2017@gmail.com" data-cursor="Mail"><i data-lucide="mail" class="ico"></i> shubhamp2017@gmail.com</a>
