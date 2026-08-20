@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W12G8WD90W"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W12G8WD90W');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>How a language model actually reads and writes — Shubham Pagare</title>
+  <meta name="description" content="A session on what happens when you hit send: tokens, embeddings, attention, sampling — walked with one sentence, The cat sat on the mat.">
+  <meta name="author" content="Shubham Pagare">
+  <meta name="theme-color" content="#f7f7f7">
+  <link rel="canonical" href="https://shubhampagare.dev/blog/llms.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How a language model actually reads and writes">
+  <meta property="og:description" content="A walkthrough of tokens, embeddings, attention, and sampling — using one sentence: The cat sat on the mat.">
+  <meta property="og:url" content="https://shubhampagare.dev/blog/llms.html">
+  <meta property="og:image" content="https://shubhampagare.dev/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How a language model actually reads and writes">
+  <meta name="twitter:description" content="A walkthrough of what happens when you hit send, using one running sentence.">
+  <meta name="twitter:image" content="https://shubhampagare.dev/og-image.png">
+  <link rel="icon" href="../favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    :root{
+      --title:'Bricolage Grotesque',sans-serif;
+      --text:'Schibsted Grotesk',sans-serif;
+      --bg:#f7f7f7;--bg-2:#ececec;--ink:#022016;--ink-dim:#083d2a;--ink-faint:#4a6b5c;
+      --line:rgba(8,61,42,.14);--signal:#008841;--signal-ink:#f7f7f7;
+      --warn:#8a4a12;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--text);
+      -webkit-font-smoothing:antialiased;overflow:hidden}
+    ::selection{background:var(--signal);color:var(--signal-ink)}
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit;cursor:pointer}
+    .ico{width:1em;height:1em;stroke-width:1.75}
+
+    .grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.55'/></svg>")}
+
+    .deck{position:relative;z-index:3;height:100%;width:100%}
+    .slide{position:absolute;inset:0;display:none;
+      padding:52px 72px 84px;
+      flex-direction:column;justify-content:flex-start}
+    .slide.on{display:flex;animation:rise .4s ease both}
+    @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+    .meta{display:flex;align-items:center;justify-content:space-between;gap:16px;
+      min-height:28px;margin-bottom:16px}
+    .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:0}
+    h1,h2{font-family:var(--title);font-weight:500;letter-spacing:-.035em;line-height:1.08}
+    h1{font-size:clamp(32px,4.2vw,56px)}
+    h2{font-size:clamp(26px,3.2vw,38px)}
+    .lede{margin-top:16px;font-size:clamp(16px,1.55vw,21px);color:var(--ink-dim);line-height:1.4}
+    .sub{margin-top:10px;font-size:14px;color:var(--ink-faint)}
+    em{font-style:normal;color:var(--signal)}
+
+    .stamp{display:inline-block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+      padding:4px 8px;border:1px solid var(--line);color:var(--ink-faint);margin:0;flex-shrink:0}
+    .stamp.infer{border-color:var(--signal);color:var(--signal)}
+    .stamp.train{border-color:var(--warn);color:var(--warn)}
+
+    .row{display:grid;gap:24px 40px;margin-top:32px}
+    .metric .num{font-family:var(--title);font-size:clamp(26px,3vw,38px);letter-spacing:-.03em;line-height:1}
+    .metric .lab{margin-top:8px;font-size:15px;color:var(--ink-dim)}
+    .chart-note{margin-top:16px;font-size:13px;color:var(--ink-faint);line-height:1.4}
+
+    .hero h1{font-size:clamp(36px,5.4vw,72px);line-height:.94;max-width:none}
+    .hero .lede{max-width:34ch;margin-top:22px}
+    .hero .ask{max-width:28ch}
+
+    .ask{margin-top:32px;font-family:var(--title);font-size:clamp(18px,2.1vw,28px);font-weight:500;letter-spacing:-.03em;color:var(--signal);line-height:1.2;max-width:36ch}
+    .vs{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:32px}
+    .vs3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:32px}
+    .card{padding:22px 0;border-top:1px solid var(--line)}
+    .card h3{font-family:var(--title);font-size:clamp(22px,2.4vw,32px);font-weight:500;letter-spacing:-.03em;margin-bottom:8px}
+    .card p{font-size:clamp(15px,1.4vw,18px);color:var(--ink-dim);line-height:1.35}
+    .card .tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px}
+    .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:36px}
+    .nums .n{font-family:var(--title);font-size:clamp(32px,4.2vw,56px);letter-spacing:-.04em;line-height:1}
+    .nums .l{margin-top:10px;font-size:16px;color:var(--ink-dim);line-height:1.35}
+    .nums .src{margin-top:6px;font-size:12px;color:var(--ink-faint)}
+
+    .pipe{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:22px}
+    .chip{font-family:var(--title);font-size:clamp(14px,1.5vw,18px);padding:10px 14px;border:1px solid var(--line);letter-spacing:-.02em}
+    .chip.hi{border-color:var(--signal);color:var(--signal)}
+    .arrow{color:var(--ink-faint);font-size:18px}
+
+    .arch{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;margin-top:24px;align-items:start}
+    .stack{display:flex;flex-direction:column;gap:6px}
+    .layer{border:1px solid var(--line);padding:10px 14px;font-size:14px;color:var(--ink-dim)}
+    .layer b{font-family:var(--title);font-weight:500;color:var(--ink);letter-spacing:-.02em;display:block;font-size:16px;margin-bottom:2px}
+    .layer.core{border-color:var(--signal);color:var(--ink)}
+    .layer.core b{color:var(--signal)}
+    .inner{margin-top:8px;padding-left:12px;border-left:2px solid var(--signal);display:flex;flex-direction:column;gap:4px}
+    .inner span{font-size:13px;color:var(--ink-dim)}
+
+    .viz{width:100%;height:auto;display:block;margin-top:22px}
+    .split{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;margin-top:22px;align-items:center}
+    .split-wide{display:grid;grid-template-columns:.9fr 1.1fr;gap:36px;margin-top:18px;align-items:start}
+    table.mat{border-collapse:collapse;width:100%;font-size:13px;margin-top:8px}
+    table.mat th,table.mat td{border:1px solid var(--line);padding:7px 8px;text-align:center;font-variant-numeric:tabular-nums}
+    table.mat th{font-family:var(--title);font-weight:500;font-size:12px;color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase}
+    table.mat td.rowid{text-align:left;color:var(--ink);font-family:var(--title);font-weight:500;white-space:nowrap}
+    table.mat tr.hit td{background:rgba(0,136,65,.1);color:var(--ink)}
+    .tiny{margin-top:8px;font-size:12px;color:var(--ink-faint);line-height:1.35}
+    .ask.tight{margin-top:18px}
+
+    .flow-head{display:flex;justify-content:space-between;align-items:end;gap:16px}
+    .flow-n{font-family:var(--title);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);white-space:nowrap;min-width:9ch;text-align:center}
+    .flow-ctrl{display:flex;align-items:center;gap:8px}
+    .flow-ctrl button{font-family:inherit;background:none;border:1px solid var(--line);color:var(--ink);cursor:pointer;font-size:13px;padding:6px 12px}
+    .flow-ctrl button:hover{border-color:var(--signal);color:var(--signal)}
+    .flow-ctrl button:disabled{opacity:.28;cursor:default;border-color:var(--line);color:var(--ink-faint)}
+    .flow-cap{margin-top:10px;font-size:clamp(15px,1.45vw,18px);color:var(--ink-dim);line-height:1.35;min-height:2.6em}
+    .flow-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;margin-top:14px;align-items:start}
+    .flow-box{border-top:1px solid var(--line);padding-top:12px}
+    .flow-lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+    .seq{display:flex;flex-wrap:wrap;gap:8px}
+    .seq-item{border:1px solid var(--line);padding:8px 10px;min-width:52px;text-align:center}
+    .seq-item .w{font-family:var(--title);font-size:16px;letter-spacing:-.02em;display:block}
+    .seq-item .id{font-size:11px;color:var(--ink-faint);margin-top:4px}
+    .seq-item .vec{font-size:10px;color:var(--ink-faint);margin-top:4px;max-width:88px}
+    .seq-item .pos{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-top:2px}
+    .seq-item.prompt{opacity:.9}
+    .seq-item.gen{border-color:var(--signal)}
+    .seq-item.gen .w{color:var(--signal)}
+    .seq-item.hit{border-color:var(--signal);background:rgba(0,136,65,.08)}
+    .seq-item.stop{border-color:var(--warn)}
+    .seq-item.stop .w{color:var(--warn)}
+    .loop-note{margin-top:14px;font-family:var(--title);font-size:15px;color:var(--ink-faint)}
+    .loop-note.on{color:var(--signal)}
+    .loop-note.off{color:var(--warn)}
+    .inside-title{font-family:var(--title);font-size:18px;letter-spacing:-.03em;margin-bottom:10px}
+    .type-box{border:1px solid var(--line);padding:14px 16px;font-family:var(--title);font-size:22px;letter-spacing:-.03em;min-height:56px}
+    .flow-caret{display:inline-block;width:2px;height:.9em;background:var(--signal);vertical-align:-2px;margin-left:2px;animation:blink 1s step-end infinite}
+    @keyframes blink{50%{opacity:0}}
+    .bars{display:flex;flex-direction:column;gap:7px}
+    .bar-row{display:grid;grid-template-columns:72px 1fr 48px;gap:10px;align-items:center;font-size:13px}
+    .bar-row b{font-family:var(--title);font-weight:500}
+    .bar-track{height:14px;background:var(--bg-2)}
+    .bar-fill{height:100%;background:var(--signal);width:0;transition:width .45s ease}
+    .bar-row.win .bar-fill{background:var(--signal)}
+    .bar-row.win b{color:var(--signal)}
+    .bar-row.eos .bar-fill{background:var(--warn)}
+    .bar-row.eos.win b{color:var(--warn)}
+    .pick-big{font-family:var(--title);font-size:42px;letter-spacing:-.04em;color:var(--signal);line-height:1}
+    .pick-big.warn{color:var(--warn)}
+    .pick-sub{margin-top:8px;font-size:14px;color:var(--ink-dim)}
+    table.mat.sm td,table.mat.sm th{padding:5px 6px;font-size:12px}
+    @media(prefers-reduced-motion:reduce){
+      .flow-caret,.bar-fill{animation:none;transition:none}
+    }
+
+    .hud-hot{position:fixed;top:0;left:0;right:0;z-index:50;height:max(52px,env(safe-area-inset-top) + 36px)}
+    .hud{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:20px;
+      padding:14px 32px;padding-top:max(14px,env(safe-area-inset-top));
+      background:rgba(247,247,247,.72);border-bottom:1px solid rgba(8,61,42,.1);
+      backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
+      opacity:0;visibility:hidden;transform:translateY(-12px);pointer-events:none;
+      transition:opacity .22s ease,transform .22s ease,visibility .22s}
+    .hud a,.hud button{pointer-events:auto}
+    .hud-hot:hover .hud,
+    .hud-hot:focus-within .hud,
+    body.nav-on .hud,
+    body.menu-open .hud{
+      opacity:1;visibility:visible;transform:none;pointer-events:auto}
+    body.menu-open .hud-hot{height:100%}
+    .hud-name{font-size:15px;font-weight:500;flex:none}
+    .hud-nav{display:flex;gap:22px;font-size:15px;margin-left:auto}
+    .hud-nav a,.hud-name{transition:opacity .2s}
+    .hud-nav a:hover,.hud-name:hover{opacity:.55}
+    .menu-btn{display:none;width:36px;height:36px;border:0;background:transparent;color:var(--ink);margin-left:auto;
+      padding:0;place-items:center;line-height:0}
+    .menu-btn .ico{width:22px;height:22px;display:block}
+
+    .deck-bar{position:fixed;z-index:10;left:0;right:0;bottom:0;display:flex;align-items:center;
+      gap:16px;padding:14px 32px;padding-bottom:max(14px,env(safe-area-inset-bottom));font-size:13px;color:var(--ink-faint);
+      background:rgba(247,247,247,.7);border-top:1px solid var(--line);
+      backdrop-filter:blur(16px)}
+    .deck-bar .progress{flex:1;height:2px;background:var(--bg-2);border-radius:99px;overflow:hidden}
+    .deck-bar .bar{height:100%;width:0;background:var(--signal)}
+    .deck-bar button{font-family:inherit;background:none;border:0;color:var(--ink);cursor:pointer;font-size:13px;padding:4px 8px}
+    .deck-bar button:hover{opacity:.55}
+
+    @media(max-width:860px){
+      .slide{padding:52px 22px 76px}
+      .vs,.vs3,.nums,.row,.arch,.split,.split-wide,.flow-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:760px){
+      .hud{padding:10px 16px;padding-top:max(10px,env(safe-area-inset-top));padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));
+        justify-content:space-between;min-height:calc(52px + env(safe-area-inset-top))}
+      .hud-name{font-size:14px;max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1}
+      .menu-btn{display:grid;width:44px;height:44px;flex:none;position:relative;z-index:60;margin:0 -10px 0 0}
+      .hud-nav{display:none;position:fixed;top:0;left:0;right:0;bottom:0;margin:0;
+        flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;
+        padding:calc(72px + env(safe-area-inset-top)) 24px max(32px,env(safe-area-inset-bottom));
+        background:rgba(247,247,247,.94);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);font-size:22px}
+      .hud-nav a{display:flex;align-items:center;min-height:52px;padding:8px 0;border-bottom:1px solid var(--line)}
+      .hud-nav.open{display:flex;pointer-events:auto}
+    }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="hud-hot">
+  <div class="hud">
+    <a href="../index.html" class="hud-name">Shubham Pagare</a>
+    <nav class="hud-nav" id="navLinks">
+      <a href="../index.html#work">Work</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#skills">Skills</a>
+      <a href="../index.html#writing">Writing</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><i data-lucide="menu" class="ico" id="menuIcon"></i></button>
+  </div>
+  </div>
+  <div class="deck" id="deck">
+
+    <section class="slide on hero">
+      <div class="meta"><div class="kicker">Session · LLMs · Shubham Pagare</div></div>
+      <h1>How a language model<br>actually <em>reads</em><br>and writes.</h1>
+      <p class="lede">One sentence will stay with us: “The cat sat on the mat.”</p>
+      <p class="ask">What do you think ChatGPT is doing when you hit send?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta"><div class="kicker">The map</div></div>
+      <h2>We walk this path once. Then we stop.</h2>
+      <svg class="viz" viewBox="0 0 920 150" aria-label="Session map">
+        <rect x="0" y="28" width="150" height="64" fill="none" stroke="#008841"/>
+        <text x="75" y="56" text-anchor="middle" fill="#008841" font-size="16" font-family="Bricolage Grotesque">Text</text>
+        <text x="75" y="76" text-anchor="middle" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk">messy language</text>
+        <text x="162" y="64" fill="#4a6b5c" font-size="18">→</text>
+        <rect x="186" y="28" width="150" height="64" fill="none" stroke="#008841"/>
+        <text x="261" y="56" text-anchor="middle" fill="#008841" font-size="16" font-family="Bricolage Grotesque">Tokens</text>
+        <text x="261" y="76" text-anchor="middle" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk">chunks + IDs</text>
+        <text x="348" y="64" fill="#4a6b5c" font-size="18">→</text>
+        <rect x="372" y="28" width="150" height="64" fill="none" stroke="#008841"/>
+        <text x="447" y="56" text-anchor="middle" fill="#008841" font-size="16" font-family="Bricolage Grotesque">Vectors</text>
+        <text x="447" y="76" text-anchor="middle" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk">lookup table</text>
+        <text x="534" y="64" fill="#4a6b5c" font-size="18">→</text>
+        <rect x="558" y="28" width="150" height="64" fill="none" stroke="#008841"/>
+        <text x="633" y="56" text-anchor="middle" fill="#008841" font-size="16" font-family="Bricolage Grotesque">Layers</text>
+        <text x="633" y="76" text-anchor="middle" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk">look left, think</text>
+        <text x="720" y="64" fill="#4a6b5c" font-size="18">→</text>
+        <rect x="744" y="28" width="176" height="64" fill="#008841"/>
+        <text x="832" y="56" text-anchor="middle" fill="#f7f7f7" font-size="16" font-family="Bricolage Grotesque">Next ID</text>
+        <text x="832" y="76" text-anchor="middle" fill="#f7f7f7" font-size="11" font-family="Schibsted Grotesk">pick, append, repeat</text>
+        <text x="0" y="128" fill="#008841" font-size="13" font-family="Schibsted Grotesk">Green stamp = when you hit send.</text>
+        <text x="280" y="128" fill="#8a4a12" font-size="13" font-family="Schibsted Grotesk">Amber stamp = how the weights were born. Not happening in the chat.</text>
+      </svg>
+      <p class="ask tight">If you remember only this picture, the rest is detail.</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta"><div class="kicker">NLP</div></div>
+      <h2>NLP is teaching computers to work with <em>human language</em>.</h2>
+      <div class="vs3">
+        <div class="card">
+          <h3>Understand</h3>
+          <p>Classify. Find names. Match meaning.</p>
+        </div>
+        <div class="card">
+          <h3>Generate</h3>
+          <p>Translate. Summarize. Write. Answer.</p>
+        </div>
+        <div class="card">
+          <h3>The hard part</h3>
+          <p>Same word, two meanings. Context lives across sentences.</p>
+        </div>
+      </div>
+      <p class="lede" style="max-width:40ch">“I sat by the bank.” River — or money?</p>
+      <p class="ask tight">Is “bank” a river or money?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta"><div class="kicker">Language models</div></div>
+      <h2>A language model predicts the <em>next piece</em> of text.</h2>
+      <p class="tiny">Running example: “The cat sat on the ___”</p>
+      <svg class="viz" viewBox="0 0 920 150" aria-label="Useful context length by era">
+        <text x="0" y="16" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">HOW FAR CAN IT REMEMBER  ·  schematic</text>
+        <text x="0" y="52" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">Stats</text>
+        <rect x="90" y="36" width="70" height="22" fill="#008841" opacity=".35"/>
+        <text x="168" y="52" fill="#083d2a" font-size="12" font-family="Schibsted Grotesk">n-gram  ·  last few words</text>
+        <text x="0" y="90" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">Neural</text>
+        <rect x="90" y="74" width="210" height="22" fill="#008841" opacity=".55"/>
+        <text x="308" y="90" fill="#083d2a" font-size="12" font-family="Schibsted Grotesk">RNN / LSTM  ·  fading memory</text>
+        <text x="0" y="128" fill="#008841" font-size="12" font-family="Schibsted Grotesk">Transformer</text>
+        <rect x="90" y="112" width="720" height="22" fill="#008841"/>
+        <text x="820" y="128" fill="#083d2a" font-size="12" font-family="Schibsted Grotesk">this is our era</text>
+      </svg>
+      <div class="vs3" style="margin-top:12px">
+        <div class="card">
+          <div class="tag">Stats era</div>
+          <h3>Count it</h3>
+          <p>Frequency tables. Fast. Almost no long memory.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Neural era</div>
+          <h3>Learn it</h3>
+          <p>Dense vectors. Must run left to right.</p>
+        </div>
+        <div class="card">
+          <div class="tag">Transformers</div>
+          <h3>Attend to it</h3>
+          <p>Every token can look at the others. Parallel.</p>
+        </div>
+      </div>
+      <p class="ask tight">Which era is ChatGPT in?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta">
+        <div class="kicker">What is an LLM</div>
+        <span class="stamp train">Train time  ·  not the chat</span>
+      </div>
+      <h2>An LLM is that same idea, trained at <em>scale</em>.</h2>
+      <div class="nums">
+        <div>
+          <div class="n">P</div>
+          <div class="l">Parameters</div>
+          <div class="src">billions of weights</div>
+        </div>
+        <div>
+          <div class="n">D</div>
+          <div class="l">Data</div>
+          <div class="src">web, books, code</div>
+        </div>
+        <div>
+          <div class="n">C</div>
+          <div class="l">Compute</div>
+          <div class="src">the ingredient people forget</div>
+        </div>
+      </div>
+      <p class="lede" style="max-width:52ch">Not search. Not a database. Next-token prediction that got large enough to look like reasoning.</p>
+      <p class="ask tight">Would a smaller model with better data beat a huge one with junk?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta">
+        <div class="kicker">Tokens</div>
+        <span class="stamp infer">When you hit send</span>
+      </div>
+      <h2>The model never sees letters. It sees <em>IDs</em>.</h2>
+      <div class="pipe">
+        <span class="chip">The cat sat on the</span>
+        <span class="arrow">→</span>
+        <span class="chip">The</span>
+        <span class="chip">cat</span>
+        <span class="chip">sat</span>
+        <span class="chip">on</span>
+        <span class="chip">the</span>
+        <span class="arrow">→</span>
+        <span class="chip hi">464 · 3797 · 2647 · 322 · 279</span>
+      </div>
+      <div class="split" style="margin-top:8px">
+        <div>
+          <div class="card" style="padding-top:0;border-top:0">
+            <h3>Token + ID</h3>
+            <p>A chunk of text, then an integer from a fixed list. That number is what the network can index.</p>
+          </div>
+          <div class="card">
+            <h3>The splitter is frozen</h3>
+            <p>BPE merges frequent pairs until the list is ~32k–200k pieces. Built once. Train and chat must use the same one.</p>
+          </div>
+          <p class="tiny">“unhappiness” often becomes un + happi + ness. “ChatGPT” is usually more than one ID.</p>
+        </div>
+        <svg class="viz" viewBox="0 0 400 180" aria-label="BPE merge">
+          <text x="0" y="16" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">HOW THE ALPHABET IS BUILT  ·  once, before training</text>
+          <text x="0" y="52" fill="#022016" font-size="16" font-family="Bricolage Grotesque">l o w e r</text>
+          <text x="0" y="88" fill="#022016" font-size="16" font-family="Bricolage Grotesque">lo  w  e  r</text>
+          <text x="0" y="124" fill="#008841" font-size="16" font-family="Bricolage Grotesque">low   er</text>
+          <text x="0" y="158" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">Chars too small. Words too many. Subwords win.</text>
+        </svg>
+      </div>
+      <p class="ask tight">Can two English models swap this splitter?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta">
+        <div class="kicker">Embeddings</div>
+        <span class="stamp infer">When you hit send</span>
+      </div>
+      <h2>An ID becomes a point in a high-dimensional <em>space</em>.</h2>
+      <div class="split">
+        <div>
+          <p class="tiny" style="margin-top:0">LOOKUP  ·  one ID = one row. “sat” is highlighted.</p>
+          <table class="mat">
+            <tr><th>ID</th><th>token</th><th>d0</th><th>d1</th><th>d2</th><th>…</th><th>d4095</th></tr>
+            <tr><td>464</td><td class="rowid">The</td><td>0.12</td><td>−0.41</td><td>0.08</td><td>…</td><td>0.03</td></tr>
+            <tr><td>3797</td><td class="rowid">cat</td><td>−0.33</td><td>0.61</td><td>0.14</td><td>…</td><td>0.22</td></tr>
+            <tr class="hit"><td>2647</td><td class="rowid">sat</td><td>0.55</td><td>0.02</td><td>−0.19</td><td>…</td><td>−0.07</td></tr>
+          </table>
+          <div class="nums" style="margin-top:18px;gap:20px">
+            <div>
+              <div class="n" style="font-size:28px">V×d</div>
+              <div class="l">the whole table</div>
+              <div class="src">50k × 4096 ≈ 200M numbers</div>
+            </div>
+            <div>
+              <div class="n" style="font-size:28px">1×d</div>
+              <div class="l">one token</div>
+              <div class="src">a list of numbers, not a word</div>
+            </div>
+          </div>
+        </div>
+        <svg class="viz" viewBox="0 0 360 250" aria-label="2D sketch of embedding space">
+          <text x="0" y="16" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">SKETCH  ·  real space has thousands of axes</text>
+          <line x1="30" y1="220" x2="340" y2="220" stroke="rgba(8,61,42,.2)"/>
+          <line x1="30" y1="36" x2="30" y2="220" stroke="rgba(8,61,42,.2)"/>
+          <circle cx="92" cy="160" r="6" fill="#008841"/>
+          <text x="102" y="164" fill="#083d2a" font-size="12" font-family="Schibsted Grotesk">cat</text>
+          <circle cx="128" cy="140" r="6" fill="#008841"/>
+          <text x="138" y="144" fill="#083d2a" font-size="12" font-family="Schibsted Grotesk">dog</text>
+          <circle cx="108" cy="190" r="6" fill="#008841" opacity=".55"/>
+          <text x="118" y="208" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk">sat</text>
+          <circle cx="250" cy="80" r="6" fill="#8a4a12"/>
+          <text x="260" y="84" fill="#083d2a" font-size="12" font-family="Schibsted Grotesk">python</text>
+          <circle cx="210" cy="180" r="6" fill="rgba(8,61,42,.35)"/>
+          <text x="220" y="184" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk">the</text>
+          <text x="40" y="244" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk">nearby ≈ related</text>
+        </svg>
+      </div>
+      <p class="ask tight">If d is 4096, what is “sat” actually stored as?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta">
+        <div class="kicker">How the lookup table is born</div>
+        <span class="stamp train">Train time  ·  not the chat</span>
+      </div>
+      <h2>Nobody types the table. Training <em>writes</em> it.</h2>
+      <div class="split-wide">
+        <div>
+          <svg class="viz" viewBox="0 0 400 260" aria-label="Embedding table training loop">
+            <text x="0" y="16" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">ONE TRAINING STEP  ·  “The cat sat on the ___”</text>
+            <rect x="0" y="32" width="380" height="36" fill="none" stroke="rgba(8,61,42,.2)"/>
+            <text x="12" y="55" fill="#022016" font-size="14" font-family="Bricolage Grotesque">1. Random rows  ·  noise at the start</text>
+            <rect x="0" y="76" width="380" height="36" fill="none" stroke="rgba(8,61,42,.2)"/>
+            <text x="12" y="99" fill="#022016" font-size="14" font-family="Bricolage Grotesque">2. Lookup  ·  each ID picks its row</text>
+            <rect x="0" y="120" width="380" height="36" fill="none" stroke="rgba(8,61,42,.2)"/>
+            <text x="12" y="143" fill="#022016" font-size="14" font-family="Bricolage Grotesque">3. Model guesses the next word</text>
+            <rect x="0" y="164" width="380" height="36" fill="none" stroke="#008841"/>
+            <text x="12" y="187" fill="#008841" font-size="14" font-family="Bricolage Grotesque">4. Wrong? A mistake score is born</text>
+            <rect x="0" y="208" width="380" height="44" fill="#008841"/>
+            <text x="12" y="228" fill="#f7f7f7" font-size="14" font-family="Bricolage Grotesque">5. That mistake nudges those rows</text>
+            <text x="12" y="244" fill="#f7f7f7" font-size="11" font-family="Schibsted Grotesk">only tokens in this sentence move</text>
+          </svg>
+        </div>
+        <div>
+          <div class="card" style="padding-top:0;border-top:0">
+            <h3>Same training as the rest</h3>
+            <p>The table is just more numbers in the model. No separate “embedding class.”</p>
+          </div>
+          <div class="card">
+            <h3>Meaning is a side effect</h3>
+            <p>Rows that help guess similar next words drift together. Cat sits near dog because that helped predict “sat.”</p>
+          </div>
+          <div class="card">
+            <h3>Then it freezes</h3>
+            <p>In ChatGPT, lookup is only: ID → row. Your prompt does not rewrite the table.</p>
+          </div>
+        </div>
+      </div>
+      <p class="ask tight">If “mat” never appeared in training, can this table know it well?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta">
+        <div class="kicker">Static vs contextual</div>
+        <span class="stamp infer">When you hit send</span>
+      </div>
+      <h2>Same word. Same vector? That was the bank question.</h2>
+      <div class="split">
+        <svg class="viz" viewBox="0 0 400 210" aria-label="Static embedding">
+          <text x="0" y="16" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">STATIC  ·  one row, forever</text>
+          <line x1="24" y1="186" x2="380" y2="186" stroke="rgba(8,61,42,.2)"/>
+          <line x1="24" y1="36" x2="24" y2="186" stroke="rgba(8,61,42,.2)"/>
+          <circle cx="200" cy="110" r="10" fill="#8a4a12"/>
+          <text x="216" y="114" fill="#022016" font-size="16" font-family="Bricolage Grotesque">bank</text>
+          <text x="36" y="64" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">river?</text>
+          <text x="300" y="64" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">money?</text>
+        </svg>
+        <svg class="viz" viewBox="0 0 400 210" aria-label="Contextual embedding">
+          <text x="0" y="16" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">AFTER THE LAYERS  ·  the vector has moved</text>
+          <line x1="24" y1="186" x2="380" y2="186" stroke="rgba(8,61,42,.2)"/>
+          <line x1="24" y1="36" x2="24" y2="186" stroke="rgba(8,61,42,.2)"/>
+          <circle cx="110" cy="140" r="8" fill="#008841"/>
+          <text x="122" y="144" fill="#022016" font-size="13" font-family="Bricolage Grotesque">bank · river</text>
+          <circle cx="280" cy="72" r="8" fill="#008841"/>
+          <text x="248" y="56" fill="#022016" font-size="13" font-family="Bricolage Grotesque">bank · loan</text>
+        </svg>
+      </div>
+      <p class="lede" style="max-width:56ch">The lookup row for “bank” is still one row. Context is added in the layers. That is the answer to slide 3.</p>
+      <p class="ask tight">Which picture fails the river / money test?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta">
+        <div class="kicker">Three shapes</div>
+        <span class="stamp infer">Architecture</span>
+      </div>
+      <h2>Same family. Three ways to look.</h2>
+      <svg class="viz" viewBox="0 0 920 140" aria-label="Three transformer shapes">
+        <text x="0" y="16" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">WHO CAN LOOK AT WHOM</text>
+        <text x="20" y="44" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">Encoder–decoder</text>
+        <rect x="20" y="54" width="110" height="40" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="75" y="79" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">ENC  ↔</text>
+        <rect x="148" y="54" width="110" height="40" fill="none" stroke="#008841"/>
+        <text x="203" y="79" text-anchor="middle" fill="#008841" font-size="13" font-family="Bricolage Grotesque">DEC  →</text>
+        <text x="20" y="114" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk">T5 · translate</text>
+        <text x="330" y="44" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">Encoder only</text>
+        <rect x="330" y="54" width="200" height="40" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="430" y="79" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">ENC  ↔  ↔  ↔</text>
+        <text x="330" y="114" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk">BERT · classify</text>
+        <text x="620" y="44" fill="#008841" font-size="12" font-family="Schibsted Grotesk">Decoder only</text>
+        <rect x="620" y="54" width="260" height="40" fill="#008841"/>
+        <text x="750" y="79" text-anchor="middle" fill="#f7f7f7" font-size="13" font-family="Bricolage Grotesque">DEC  →  →  →</text>
+        <text x="620" y="114" fill="#083d2a" font-size="11" font-family="Schibsted Grotesk">GPT · Llama · chat</text>
+      </svg>
+      <div class="vs3" style="margin-top:4px">
+        <div class="card">
+          <h3>Read, then write</h3>
+          <p>Sees the full input, then writes the output.</p>
+        </div>
+        <div class="card">
+          <h3>Understand</h3>
+          <p>Looks both ways. Labels and search. Not a chat model.</p>
+        </div>
+        <div class="card">
+          <h3>Generate</h3>
+          <p>Each token may only look left. This is ChatGPT’s family.</p>
+        </div>
+      </div>
+      <p class="ask tight">Which one is running when you use ChatGPT?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta">
+        <div class="kicker">Decoder-only</div>
+        <span class="stamp infer">When you hit send</span>
+      </div>
+      <h2>Three jobs: stack, don’t peek, guess the next ID.</h2>
+      <div class="arch">
+        <div class="stack">
+          <div class="layer"><b>IDs in</b>The cat sat on the</div>
+          <div class="layer"><b>Lookup + position</b>the row, plus where it sits in the sentence</div>
+          <div class="layer core">
+            <b>Same block, repeated</b>
+            <div class="inner">
+              <span>Listen: who on the left matters?</span>
+              <span>Think: update this token’s vector</span>
+            </div>
+          </div>
+          <div class="layer core"><b>Scores → percentages</b>one score per word in the vocab, then they sum to 100%</div>
+          <div class="layer"><b>Pick the next ID</b>append it. Repeat.</div>
+        </div>
+        <div>
+          <svg class="viz" viewBox="0 0 320 220" aria-label="Causal attention mask">
+            <text x="0" y="16" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">NO PEEKING AT THE FUTURE</text>
+            <g font-size="11" font-family="Schibsted Grotesk" fill="#4a6b5c">
+              <text x="58" y="40">The</text>
+              <text x="108" y="40">cat</text>
+              <text x="158" y="40">sat</text>
+              <text x="208" y="40">on</text>
+            </g>
+            <rect x="52" y="52" width="28" height="28" fill="#008841"/>
+            <rect x="100" y="52" width="28" height="28" fill="rgba(8,61,42,.08)"/>
+            <rect x="148" y="52" width="28" height="28" fill="rgba(8,61,42,.08)"/>
+            <rect x="196" y="52" width="28" height="28" fill="rgba(8,61,42,.08)"/>
+            <rect x="52" y="88" width="28" height="28" fill="#008841" opacity=".7"/>
+            <rect x="100" y="88" width="28" height="28" fill="#008841"/>
+            <rect x="148" y="88" width="28" height="28" fill="rgba(8,61,42,.08)"/>
+            <rect x="196" y="88" width="28" height="28" fill="rgba(8,61,42,.08)"/>
+            <rect x="52" y="124" width="28" height="28" fill="#008841" opacity=".5"/>
+            <rect x="100" y="124" width="28" height="28" fill="#008841" opacity=".75"/>
+            <rect x="148" y="124" width="28" height="28" fill="#008841"/>
+            <rect x="196" y="124" width="28" height="28" fill="rgba(8,61,42,.08)"/>
+            <rect x="52" y="160" width="28" height="28" fill="#008841" opacity=".4"/>
+            <rect x="100" y="160" width="28" height="28" fill="#008841" opacity=".6"/>
+            <rect x="148" y="160" width="28" height="28" fill="#008841" opacity=".8"/>
+            <rect x="196" y="160" width="28" height="28" fill="#008841"/>
+            <text x="0" y="208" fill="#083d2a" font-size="12" font-family="Schibsted Grotesk">Green = allowed. Grey = blocked.</text>
+          </svg>
+          <p class="tiny">Position is why “dog bites man” is not “man bites dog.” Same words, different order, different vectors.</p>
+        </div>
+      </div>
+      <p class="ask tight">When the model is writing “mat,” may it look at the word after it?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta">
+        <div class="kicker">Generation</div>
+        <span class="stamp infer">When you hit send</span>
+      </div>
+      <h2>It writes one token. Then it reads what it just wrote.</h2>
+      <svg class="viz" viewBox="0 0 920 150" aria-label="Autoregressive generation">
+        <text x="0" y="16" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">THE SENTENCE GROWS BY 1</text>
+        <text x="0" y="48" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">now</text>
+        <rect x="50" y="32" width="64" height="28" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="82" y="51" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">The</text>
+        <rect x="122" y="32" width="64" height="28" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="154" y="51" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">cat</text>
+        <rect x="194" y="32" width="64" height="28" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="226" y="51" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">sat</text>
+        <rect x="266" y="32" width="64" height="28" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="298" y="51" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">on</text>
+        <rect x="338" y="32" width="64" height="28" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="370" y="51" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">the</text>
+        <text x="0" y="96" fill="#008841" font-size="12" font-family="Schibsted Grotesk">next</text>
+        <rect x="50" y="80" width="64" height="28" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="82" y="99" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">The</text>
+        <rect x="122" y="80" width="64" height="28" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="154" y="99" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">cat</text>
+        <rect x="194" y="80" width="64" height="28" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="226" y="99" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">sat</text>
+        <rect x="266" y="80" width="64" height="28" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="298" y="99" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">on</text>
+        <rect x="338" y="80" width="64" height="28" fill="none" stroke="rgba(8,61,42,.25)"/>
+        <text x="370" y="99" text-anchor="middle" fill="#083d2a" font-size="13" font-family="Bricolage Grotesque">the</text>
+        <rect x="410" y="80" width="64" height="28" fill="#008841"/>
+        <text x="442" y="99" text-anchor="middle" fill="#f7f7f7" font-size="13" font-family="Bricolage Grotesque">mat</text>
+        <text x="0" y="140" fill="#4a6b5c" font-size="13" font-family="Schibsted Grotesk">Then it feeds “mat” back in and guesses again. That is why long answers take time — and why one bad token can derail the rest.</text>
+      </svg>
+      <div class="vs" style="margin-top:8px">
+        <div class="card">
+          <h3>Output becomes input</h3>
+          <p>There is no separate “writer.” Generation is just next-token, over and over.</p>
+        </div>
+        <div class="card">
+          <h3>Your prompt is also tokens</h3>
+          <p>ChatGPT is not thinking about your question as a document. It is continuing a token list.</p>
+        </div>
+      </div>
+      <p class="ask tight">If the first generated token is wrong, what happens to the rest?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta">
+        <div class="kicker">Temperature</div>
+        <span class="stamp infer">When you hit send</span>
+      </div>
+      <h2>First, scores become <em>percentages</em>. Then T reshapes them.</h2>
+      <p class="tiny">Softmax: every vocab score → a probability, all add to 100%. Temperature only stretches those scores first. The model is unchanged.</p>
+      <svg class="viz" viewBox="0 0 920 188" aria-label="Temperature bars">
+        <text x="0" y="16" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">“The cat sat on the ___”  ·  schematic</text>
+        <text x="0" y="40" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">T = 0.2  ·  almost always mat</text>
+        <rect x="0" y="50" width="220" height="16" fill="#008841"/>
+        <rect x="0" y="70" width="16" height="16" fill="#008841" opacity=".45"/>
+        <rect x="0" y="90" width="8" height="16" fill="#008841" opacity=".25"/>
+        <rect x="0" y="110" width="3" height="16" fill="rgba(8,61,42,.2)"/>
+        <text x="232" y="62" fill="#022016" font-size="12" font-family="Schibsted Grotesk">mat ~99%</text>
+        <text x="232" y="82" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">rug</text>
+        <text x="232" y="102" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">floor</text>
+        <text x="232" y="122" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">moon</text>
+        <text x="330" y="40" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">T = 1  ·  as trained</text>
+        <rect x="330" y="50" width="150" height="16" fill="#008841"/>
+        <rect x="330" y="70" width="56" height="16" fill="#008841" opacity=".55"/>
+        <rect x="330" y="90" width="26" height="16" fill="#008841" opacity=".3"/>
+        <rect x="330" y="110" width="6" height="16" fill="rgba(8,61,42,.2)"/>
+        <text x="492" y="62" fill="#022016" font-size="12" font-family="Schibsted Grotesk">mat ~64%</text>
+        <text x="492" y="82" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">rug ~24%</text>
+        <text x="492" y="102" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">floor ~11%</text>
+        <text x="492" y="122" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">moon ~2%</text>
+        <text x="640" y="40" fill="#4a6b5c" font-size="11" font-family="Schibsted Grotesk" letter-spacing="1.5">T = 2  ·  moon is allowed</text>
+        <rect x="640" y="50" width="108" height="16" fill="#008841"/>
+        <rect x="640" y="70" width="66" height="16" fill="#008841" opacity=".55"/>
+        <rect x="640" y="90" width="44" height="16" fill="#008841" opacity=".3"/>
+        <rect x="640" y="110" width="18" height="16" fill="rgba(8,61,42,.25)"/>
+        <text x="758" y="62" fill="#022016" font-size="12" font-family="Schibsted Grotesk">mat ~46%</text>
+        <text x="758" y="82" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">rug ~28%</text>
+        <text x="758" y="102" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">floor ~19%</text>
+        <text x="758" y="122" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">moon ~8%</text>
+        <text x="0" y="158" fill="#008841" font-size="14" font-family="Bricolage Grotesque">Low T = safe, repetitive. High T = diverse — and more chance the next token derails the rest.</text>
+        <text x="0" y="180" fill="#4a6b5c" font-size="12" font-family="Schibsted Grotesk">T → 0 is always the top word. APIs usually sit near 0.7–1.</text>
+      </svg>
+      <p class="ask tight">If you need a JSON field to always be the same, do you raise T or lower it?</p>
+    </section>
+
+    <section class="slide">
+      <div class="meta">
+        <div class="kicker">Base model vs chat</div>
+        <span class="stamp train">Extra training  ·  after the internet</span>
+      </div>
+      <h2>ChatGPT is a next-token model <em>plus</em> manners.</h2>
+      <div class="vs3">
+        <div class="card">
+          <div class="tag">1 · Base</div>
+          <h3>Finish the internet</h3>
+          <p>Raw LLM. It completes text. Ask a question, it may write another question.</p>
+        </div>
+        <div class="card">
+          <div class="tag">2 · Chat training</div>
+          <h3>Answer as an assistant</h3>
+          <p>Show it conversations: user / assistant. Reward replies people actually want.</p>
+        </div>
+        <div class="card">
+          <div class="tag">3 · Your send</div>
+          <h3>Still next-token</h3>
+          <p>The engine did not change. Sampling, temperature, one ID at a time — same as before.</p>
+        </div>
+      </div>
+      <p class="lede" style="max-width:52ch">Your chat does not update the weights. It only continues a token list that starts with a hidden system prompt.</p>
+      <p class="ask tight">If we turned chat training off, what would the model do with “What is a bank?”</p>
+    </section>
+
+    <section class="slide" id="recap">
+      <div class="meta">
+        <div class="kicker">Inside one send  ·  schematic IDs</div>
+        <div class="flow-ctrl" id="flow-ctrl">
+          <button type="button" id="flow-prev">← prev</button>
+          <span class="flow-n" id="flow-n">1 / 16</span>
+          <button type="button" id="flow-next">next →</button>
+        </div>
+      </div>
+      <h2>From your keystroke to the <em>stop</em> token.</h2>
+      <p class="flow-cap" id="flow-cap">A detailed pass through the machine. Same sentence as the rest of the talk.</p>
+      <div class="flow-grid">
+        <div class="flow-box">
+          <div class="flow-lab">Living sequence  ·  prompt stays, reply grows</div>
+          <div class="seq" id="flow-seq"></div>
+          <p class="loop-note" id="flow-loop">Waiting for send.</p>
+        </div>
+        <div class="flow-box" id="flow-inside"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="deck-bar">
+    <span id="label">1 / 15</span>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <button type="button" id="prev" aria-label="Previous">←</button>
+    <button type="button" id="next" aria-label="Next">→</button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    const navLinks=document.getElementById('navLinks');
+    const menuBtn=document.getElementById('menuBtn');
+    function setMenu(open){
+      navLinks.classList.toggle('open',open);
+      document.body.classList.toggle('menu-open',open);
+      menuBtn.setAttribute('aria-expanded',open?'true':'false');
+      document.getElementById('menuIcon').setAttribute('data-lucide',open?'x':'menu');
+      lucide.createIcons();
+    }
+    menuBtn.addEventListener('click',()=>setMenu(!navLinks.classList.contains('open')));
+    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+    addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+    const hudHot=document.querySelector('.hud-hot');
+    let navHide;
+    function showNav(on){
+      clearTimeout(navHide);
+      if(on) document.body.classList.add('nav-on');
+      else navHide=setTimeout(()=>{
+        if(!document.body.classList.contains('menu-open')) document.body.classList.remove('nav-on');
+      },160);
+    }
+    hudHot.addEventListener('pointerenter',()=>showNav(true));
+    hudHot.addEventListener('pointerleave',e=>{
+      if(e.pointerType==='touch') return;
+      showNav(false);
+    });
+    addEventListener('pointerdown',e=>{
+      if(hudHot.contains(e.target)||e.clientY<56) showNav(true);
+      else if(!e.target.closest('.hud-nav')) showNav(false);
+    });
+    const slides=[...document.querySelectorAll('.slide')];
+    let i=0;
+    const label=document.getElementById('label');
+    const bar=document.getElementById('bar');
+    const PROMPT=[
+      {w:'The',id:464,v:'0.12, −0.41, 0.08 …'},
+      {w:'cat',id:3797,v:'−0.33, 0.61, 0.14 …'},
+      {w:'sat',id:2647,v:'0.55, 0.02, −0.19 …'},
+      {w:'on',id:322,v:'0.08, 0.21, −0.44 …'},
+      {w:'the',id:279,v:'0.04, −0.12, 0.09 …'},
+    ];
+    const MAT={w:'mat',id:13336,v:'0.41, 0.18, −0.22 …',gen:true};
+    const DOT={w:'.',id:13,v:'0.02, 0.07, −0.01 …',gen:true};
+    const EOS={w:'EOS',id:2,v:'—',stop:true,gen:true};
+
+    function seqHtml(items,hit,opts){
+      opts=opts||{};
+      return items.map((t,i)=>{
+        const cls=['seq-item',t.stop?'stop':t.gen?'gen':'prompt',hit===i?'hit':''].join(' ');
+        let extra='';
+        if(opts.ids) extra+='<span class="id">id '+t.id+'</span>';
+        if(opts.pos) extra+='<span class="pos">pos '+i+'</span>';
+        if(opts.vec) extra+='<span class="vec">['+t.v+']</span>';
+        return '<div class="'+cls+'"><span class="w">'+t.w+'</span>'+extra+'</div>';
+      }).join('');
+    }
+    function maskSvg(n){
+      const s=26,g=4,ox=36,oy=28;
+      let cells='';
+      for(let r=0;r<n;r++) for(let c=0;c<n;c++){
+        const ok=c<=r;
+        cells+='<rect x="'+(ox+c*(s+g))+'" y="'+(oy+r*(s+g))+'" width="'+s+'" height="'+s+'" fill="'+(ok?'#008841':'rgba(8,61,42,.08)')+'" opacity="'+(ok?(0.35+0.65*(c+1)/(r+1)):1)+'"/>';
+      }
+      const labels=['The','cat','sat','on','the','mat','.'].slice(0,n);
+      let lab='';
+      labels.forEach((w,i)=>{
+        lab+='<text x="'+(ox+i*(s+g)+s/2)+'" y="18" text-anchor="middle" fill="#4a6b5c" font-size="9" font-family="Schibsted Grotesk">'+w+'</text>';
+        lab+='<text x="0" y="'+(oy+i*(s+g)+18)+'" fill="#4a6b5c" font-size="9" font-family="Schibsted Grotesk">'+w+'</text>';
+      });
+      const h=oy+n*(s+g)+8;
+      return '<svg viewBox="0 0 280 '+h+'" width="100%" aria-hidden="true">'+lab+cells+'</svg>';
+    }
+    function barsHtml(rows){
+      return '<div class="bars">'+rows.map(r=>{
+        const win=r.win?' win':'';
+        const eos=r.eos?' eos':'';
+        return '<div class="bar-row'+win+eos+'"><b>'+r.w+'</b><div class="bar-track"><div class="bar-fill" style="width:'+r.p+'%"></div></div><span>'+r.p+'%</span></div>';
+      }).join('')+'</div>';
+    }
+    function embedTable(hitId){
+      const rows=PROMPT.concat([MAT]).map(t=>{
+        const hit=t.id===hitId?' class="hit"':'';
+        const parts=t.v.replace(' …','').split(', ');
+        return '<tr'+hit+'><td>'+t.id+'</td><td class="rowid">'+t.w+'</td><td>'+parts[0]+'</td><td>'+(parts[1]||'')+'</td><td>'+(parts[2]||'')+'</td><td>…</td></tr>';
+      }).join('');
+      return '<table class="mat sm"><tr><th>ID</th><th>token</th><th>d0</th><th>d1</th><th>d2</th><th>…</th></tr>'+rows+'</table>';
+    }
+
+    const flowScript=[
+      {n:'01  query',cap:'You type. Nothing has entered the model yet — it is still characters.',loop:'Waiting for send.',seq:[],seqOpt:{},hit:-1,
+        inside:()=>'<div class="flow-lab">Input box</div><div class="inside-title">Characters, not tokens</div><div class="type-box" id="type-box"></div><p class="tiny">The network cannot read this string. A tokenizer must run first.</p>'},
+      {n:'02  tokenize',cap:'The tokenizer cuts the string into pieces. These are the tokens.',loop:'Prompt is now a list.',seq:PROMPT,seqOpt:{},hit:-1,
+        inside:()=>'<div class="flow-lab">Tokenizer</div><div class="inside-title">Text → chunks</div><p class="tiny">Subwords, words, punctuation. “The cat sat on the” happens to be five whole words.</p><p class="tiny" style="margin-top:12px">Still not numbers. The model cannot look these up yet.</p>'},
+      {n:'03  token IDs',cap:'Each piece is replaced by an integer from the frozen vocabulary.',loop:'IDs are the only input.',seq:PROMPT,seqOpt:{ids:true},hit:-1,
+        inside:()=>'<div class="flow-lab">Vocabulary lookup</div><div class="inside-title">Chunks → IDs</div><p class="tiny">464 · 3797 · 2647 · 322 · 279. Same tokenizer as training, or the IDs are garbage.</p>'},
+      {n:'04  embed table',cap:'Each ID selects one row of the embedding table E. That row is the vector.',loop:'Five rows pulled out.',seq:PROMPT,seqOpt:{ids:true},hit:2,
+        inside:()=>'<div class="flow-lab">Embedding E  ·  V × d</div><div class="inside-title">ID 2647 → row “sat”</div>'+embedTable(2647)+'<p class="tiny">Schematic numbers. Real d is hundreds or thousands.</p>'},
+      {n:'05  vectors',cap:'Every token is now a point in space — a list of numbers, not a word.',loop:'IDs became vectors.',seq:PROMPT,seqOpt:{ids:true,vec:true},hit:-1,
+        inside:()=>'<div class="flow-lab">Token embeddings</div><div class="inside-title">Five vectors in</div><p class="tiny">Nearby rows ≈ related meaning. “cat” sits nearer “sat” than “python”. The table is frozen at chat time.</p>'},
+      {n:'06  position',cap:'Order is added. Without this, “cat sat” and “sat cat” are the same bag.',loop:'Position 0…4 attached.',seq:PROMPT,seqOpt:{ids:true,pos:true},hit:-1,
+        inside:()=>'<div class="flow-lab">Positional signal</div><div class="inside-title">Where it sits in the sentence</div><p class="tiny">Token vector + position. “dog bites man” ≠ “man bites dog”.</p>'},
+      {n:'07  look left',cap:'Causal mask: each token may attend only to itself and the past. No peeking at the future.',loop:'Decoder block running.',seq:PROMPT,seqOpt:{pos:true},hit:4,
+        inside:()=>'<div class="flow-lab">Causal self-attention</div><div class="inside-title">Green = allowed</div>'+maskSvg(5)+'<p class="tiny">“the” (last prompt token) can see The…the. It cannot see a word that does not exist yet.</p>'},
+      {n:'08  softmax',cap:'The last position becomes scores over the whole vocab, then percentages that sum to 100%. Temperature reshapes them.',loop:'Ready to pick.',seq:PROMPT,seqOpt:{ids:true},hit:4,
+        inside:()=>'<div class="flow-lab">LM head → softmax  ·  T ≈ 1</div><div class="inside-title">P(next token | “The cat sat on the”)</div>'+barsHtml([{w:'mat',p:64,win:true},{w:'rug',p:24},{w:'floor',p:11},{w:'moon',p:2},{w:'EOS',p:1,eos:true}])},
+      {n:'09  sample',cap:'One ID is drawn from that distribution. Here: 13336 = “mat”.',loop:'One new token.',seq:PROMPT,seqOpt:{ids:true},hit:-1,
+        inside:()=>'<div class="flow-lab">Sampler</div><div class="pick-big">mat</div><p class="pick-sub">token ID 13336 · not greedy by force — temperature allowed rug, but mat won</p>'},
+      {n:'10  append',cap:'“mat” is appended to the sequence. It is now input. The reply is not finished.',loop:'LOOP  ·  output became input',seq:PROMPT.concat([MAT]),seqOpt:{ids:true},hit:5,
+        inside:()=>'<div class="flow-lab">Autoregressive step</div><div class="inside-title">Go back to the top of the stack</div><p class="tiny">Do not retrain. Do not “think” separately. Run tokens → vectors → look left → softmax again, now with six IDs.</p>'},
+      {n:'11  pass 2 mask',cap:'Second pass. The mask is bigger: “mat” may look at the whole prompt plus itself.',loop:'LOOP  ·  pass 2 of 3',seq:PROMPT.concat([MAT]),seqOpt:{pos:true},hit:5,
+        inside:()=>'<div class="flow-lab">Causal mask  ·  6 × 6</div>'+maskSvg(6)+'<p class="tiny">Grey cells are still the future. Nothing after “mat” exists yet.</p>'},
+      {n:'12  pass 2 softmax',cap:'New percentages. The model is now predicting what follows “mat”.',loop:'LOOP  ·  pass 2 of 3',seq:PROMPT.concat([MAT]),seqOpt:{ids:true},hit:5,
+        inside:()=>'<div class="flow-lab">P(next | … the mat)</div>'+barsHtml([{w:'.',p:51,win:true},{w:'EOS',p:22,eos:true},{w:'and',p:18},{w:'down',p:6},{w:'mat',p:3}])},
+      {n:'13  sample .',cap:'Next ID is 13 — a period. Still not EOS, so we loop again.',loop:'LOOP  ·  append and repeat',seq:PROMPT.concat([MAT,DOT]),seqOpt:{ids:true},hit:6,
+        inside:()=>'<div class="flow-lab">Sampler</div><div class="pick-big">.</div><p class="pick-sub">token ID 13 · appended · still no stop</p>'},
+      {n:'14  pass 3 softmax',cap:'Third pass. EOS is now the likely next ID. That is how the model votes to finish.',loop:'LOOP  ·  pass 3 of 3',seq:PROMPT.concat([MAT,DOT]),seqOpt:{ids:true},hit:6,
+        inside:()=>'<div class="flow-lab">P(next | … the mat .)</div>'+barsHtml([{w:'EOS',p:81,win:true,eos:true},{w:'and',p:9},{w:'Then',p:6},{w:'The',p:3},{w:'mat',p:1}])},
+      {n:'15  EOS',cap:'ID 2 is EOS — end of sequence. It is not printed as a word. The loop breaks.',loop:'STOP  ·  EOS ends the cycle',seq:PROMPT.concat([MAT,DOT,EOS]),seqOpt:{ids:true},hit:7,
+        inside:()=>'<div class="flow-lab">Stop condition</div><div class="pick-big warn">EOS</div><p class="pick-sub">token ID 2 · do not decode to text · do not append as a word · halt</p><p class="tiny">Also halt if you hit max length. Your chat never updated the weights.</p>'},
+      {n:'16  done',cap:'Reply is “mat.” Cycle over. Same frozen table, same stack, three next-token passes.',loop:'Done. Weights unchanged.',seq:PROMPT.concat([MAT,DOT]),seqOpt:{ids:true},hit:-1,
+        inside:()=>'<div class="flow-lab">What happened</div><div class="inside-title">1 send → 3 forward passes</div><p class="tiny">Pass 1 predicted mat. Pass 2 predicted “.”. Pass 3 predicted EOS and stopped. ChatGPT is this loop, plus chat training, at scale.</p>'},
+    ];
+
+    let flowStep=0,flowGen=0,typeTimer=0;
+    function stopFlow(){
+      flowGen++;
+      clearTimeout(typeTimer);
+    }
+    function paintFlow(step,idx){
+      document.getElementById('flow-n').textContent=(idx+1)+' / '+flowScript.length;
+      document.getElementById('flow-cap').textContent=step.n.replace(/^\d+\s+/,'')+' · '+step.cap;
+      const note=document.getElementById('flow-loop');
+      note.textContent=step.loop;
+      note.className='loop-note'+(step.loop.indexOf('LOOP')===0?' on':step.loop.indexOf('STOP')===0||step.loop.indexOf('Done')===0?' off':'');
+      document.getElementById('flow-seq').innerHTML=seqHtml(step.seq,step.hit,step.seqOpt);
+      document.getElementById('flow-inside').innerHTML=step.inside();
+      document.getElementById('flow-prev').disabled=idx===0;
+      document.getElementById('flow-next').disabled=idx===flowScript.length-1;
+      if(idx===0){
+        const box=document.getElementById('type-box');
+        if(box){
+          const full='The cat sat on the';
+          const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if(reduce){box.textContent=full;return}
+          let k=0;
+          const gen=flowGen;
+          (function type(){
+            if(gen!==flowGen||!box.isConnected) return;
+            box.innerHTML=full.slice(0,k)+(k<full.length?'<span class="flow-caret"></span>':'');
+            if(k<full.length){k++;typeTimer=setTimeout(type,45)}
+          })();
+        }
+      }
+    }
+    function showFlow(n){
+      flowGen++;
+      clearTimeout(typeTimer);
+      flowStep=Math.max(0,Math.min(flowScript.length-1,n));
+      paintFlow(flowScript[flowStep],flowStep);
+    }
+    function onRecap(){return slides[i].id==='recap'}
+    function go(n){
+      i=Math.max(0,Math.min(slides.length-1,n));
+      slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+      label.textContent=(i+1)+' / '+slides.length;
+      bar.style.width=((i+1)/slides.length*100)+'%';
+      if(onRecap()) showFlow(0);
+      else stopFlow();
+    }
+    document.getElementById('flow-prev').onclick=e=>{e.stopPropagation();showFlow(flowStep-1)};
+    document.getElementById('flow-next').onclick=e=>{e.stopPropagation();showFlow(flowStep+1)};
+    document.getElementById('prev').onclick=()=>go(i-1);
+    document.getElementById('next').onclick=()=>go(i+1);
+    addEventListener('keydown',e=>{
+      if(document.body.classList.contains('menu-open')) return;
+      if(onRecap() && ['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){
+        e.preventDefault();
+        if(flowStep<flowScript.length-1) showFlow(flowStep+1);
+        return;
+      }
+      if(onRecap() && ['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){
+        e.preventDefault();
+        if(flowStep>0) showFlow(flowStep-1);
+        else go(i-1);
+        return;
+      }
+      if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1)}
+      if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}
+      if(e.key==='Home') go(0);
+      if(e.key==='End') go(slides.length-1);
+    });
+    addEventListener('click',e=>{
+      if(e.target.closest('.hud')||e.target.closest('.hud-hot')||e.target.closest('.deck-bar')||e.target.closest('.menu-btn')) return;
+      if(e.target.closest('#flow-ctrl')) return;
+      if(onRecap()){
+        if(e.clientX>innerWidth*.62) showFlow(flowStep+1);
+        else if(e.clientX<innerWidth*.38) showFlow(flowStep-1);
+        return;
+      }
+      if(e.clientX>innerWidth*.62) go(i+1);
+      else if(e.clientX<innerWidth*.38) go(i-1);
+    });
+    go(0);
+  </script>
+</body>
+</html>
